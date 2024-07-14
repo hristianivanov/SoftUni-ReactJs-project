@@ -1,0 +1,20 @@
+.logo {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    font-family: 'PlusJakartaSans-Bold', sans-serif;
+}
+
+.logo > .name {
+    color: #001858;
+    font-size: 36px;
+    font-weight: 600;
+}
+
+.logo > .blog {
+    color: #6246ea;
+    font-size: 18px;
+    font-weight: 700;
+    width: 48px;
+    height: 27px;
+}
