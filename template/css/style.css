@@ -1,0 +1,47 @@
+.site-logo .site-name {
+    color: #001858;
+    font-family: "Plus Jakarta Sans";
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.site-logo .site-name>span {
+    color: var(--Blue, #6246EA);
+    font-family: "Plus Jakarta Sans";
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.button {
+    background: var(--blue, #6246ea);
+    border-radius: 8px;
+    padding: 20px 23px 19px 23px;
+}
+
+
+.site-header .cta {
+    display: flex;
+    gap: .3em;
+}
+
+.site-header .cta>* {
+    background: var(--blue, #6246ea);
+    border-radius: 8px;
+    padding: .5em .8em;
+    color: #FFFFFE;
+    font-family: "Plus Jakarta Sans";
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-transform: capitalize;
+}
+
+.site-main .section-hero {
+    background-image: radial-gradient(#D2D6DB, 5%, transparent 0);
+    background-size: 35px 35px;
+}

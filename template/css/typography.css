@@ -1,0 +1,55 @@
+:root {
+    --white: #fffffe;
+    --black: #2b2c34;
+    --blue: #6246ea;
+    --grey: #c0c0c0;
+    --dark-grey: #9a9494;
+    --light-grey-1: #eff0f3;
+    --light-grey-2: #e4e5e9;
+}
+
+html {
+    font: 16px/1.5 "Plus Jakarta Sans", sans-serif;
+    color: var(--black, #2b2c34);
+}
+
+body,
+table,
+input,
+textarea,
+button {
+    font: inherit;
+}
+
+.heading-1 {
+    font-size: 64px;
+    font-weight: bold;
+}
+
+.sub-heading-1 {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.sub-heading-2 {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.paragraph-1 {
+    font-size: 20px;
+    color: var(--dark-grey);
+}
+
+.paragraph-2 {
+    font-size: 18px;
+}
+
+.paragraph-3 {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.paragraph-4 {
+    font-size: 14px;
+}

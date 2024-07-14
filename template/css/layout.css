@@ -1,0 +1,70 @@
+body {
+    display: flex;
+    flex-flow: column;
+    height: 100vh;
+}
+
+.site-main {
+    flex-grow: 1;
+}
+
+.site-header,
+.site-footer {
+    flex: 0 0;
+}
+
+.site-header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: #EFF0F3;
+    box-shadow: 4px 6px 13px 0px rgba(215, 215, 215, 0.25);
+    padding-top: 22px;
+    padding-bottom: 20px;
+}
+
+.site-header>* {
+    display: flex;
+
+}
+
+.site-header .main-nav ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 50px;
+}
+
+.site-header .main-nav ul li a {
+    display: block;
+    color: var(--black, #2B2C34);
+    font-family: "Plus Jakarta Sans";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-transform: capitalize;
+}
+
+
+.site-footer {
+    background: #ddd;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.site-footer :first-child {
+    flex: 0 1 30%;
+}
+
+.site-footer :nth-child(2) {
+    flex: 1 0 70%;
+}
+
+.site-footer :nth-child(3) {
+    flex-basis: 100%;
+}
+
+.site-footer .footer-nav {
+    display: flex;
+}
