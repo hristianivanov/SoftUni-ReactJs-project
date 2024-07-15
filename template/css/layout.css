@@ -1,11 +1,17 @@
 body {
     display: flex;
     flex-flow: column;
+    background: #EFF0F3;
     height: 100vh;
 }
 
 .site-main {
     flex-grow: 1;
+}
+
+.wrapper {
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
 .site-header,
@@ -49,22 +55,70 @@ body {
 
 .site-footer {
     background: #ddd;
+    padding-top: 70px;
+}
+
+.site-footer .footer-header {
     display: flex;
-    flex-wrap: wrap;
+    margin-bottom: 50px;
 }
 
-.site-footer :first-child {
-    flex: 0 1 30%;
+.site-footer .footer-header .site-about {
+    flex: 30%;
 }
 
-.site-footer :nth-child(2) {
-    flex: 1 0 70%;
-}
-
-.site-footer :nth-child(3) {
-    flex-basis: 100%;
+.site-footer .footer-header .footer-nav {
+    flex: 70%;
+    justify-content: space-evenly;
 }
 
 .site-footer .footer-nav {
     display: flex;
+    list-style: none;
+}
+
+
+
+.site-footer .footer-nav .nav-section .nav-links {
+    margin-top: 25px;
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    flex-flow: column wrap;
+}
+
+.site-footer .site-about {
+    display: flex;
+    flex-flow: column;
+    gap: 20px;
+}
+
+.site-footer .site-about .social-links {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    list-style: none;
+}
+
+.site-footer .site-about .social-links li a {
+    display: block;
+}
+
+.site-footer .nav-section .nav-title {
+    color: var(--Black, #2B2C34);
+    font-family: "Plus Jakarta Sans";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-transform: uppercase;
+}
+
+.site-footer .nav-section .nav-links li a {
+    color: var(--Black, #2B2C34);
+    font-family: "Plus Jakarta Sans";
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
 }

@@ -21,6 +21,12 @@ button {
     font: inherit;
 }
 
+img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
 .heading-1 {
     font-size: 64px;
     font-weight: bold;
