@@ -1,0 +1,54 @@
+.siteHeader,
+.site-footer {
+    flex: 0 0;
+}
+
+.siteHeader {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: #EFF0F3;
+    box-shadow: 4px 6px 13px 0 rgba(215, 215, 215, 0.25);
+    padding-top: 22px;
+    padding-bottom: 20px;
+}
+
+.siteHeader > * {
+    display: flex;
+
+}
+
+.siteHeader .mainNav ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 50px;
+}
+
+.siteHeader .mainNav ul li a {
+    display: block;
+    color: var(--black, #2B2C34);
+    font-family: "Plus Jakarta Sans";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-transform: capitalize;
+}
+
+.siteHeader .cta {
+    display: flex;
+    gap: .3em;
+}
+
+.siteHeader .cta > * {
+    color: #FFFFFE;
+    background: var(--blue, #6246ea);
+    border-radius: 8px;
+    padding: .5em .8em;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-transform: capitalize;
+}

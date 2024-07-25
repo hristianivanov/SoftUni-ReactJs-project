@@ -1,0 +1,17 @@
+.siteLogo .siteName {
+    color: #001858;
+    font-family: "Plus Jakarta Sans";
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.siteLogo .siteName > span {
+    color: var(--Blue, #6246EA);
+    font-family: "Plus Jakarta Sans";
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
