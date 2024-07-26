@@ -1,7 +1,7 @@
 import styles from './Footer.module.css';
-import Logo from "../Logo/Logo.jsx";
+import Logo from "../logo/Logo.jsx";
 
-function Footer() {
+export default function Footer() {
   return (
       <footer className={styles.siteFooter}>
           <div className="wrapper">
@@ -70,5 +70,3 @@ function Footer() {
       </footer>
   )
 }
-
-export default Footer

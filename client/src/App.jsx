@@ -1,18 +1,18 @@
 import './App.css'
-import Header from "./components/Header/Header.jsx";
-import Footer from "./components/Footer/Footer.jsx";
+import Header from "./components/header/Header.jsx";
+import Footer from "./components/footer/Footer.jsx";
 import Home from "./pages/Home.jsx";
 
-function App() {
+
+export default function App() {
 
   return (
-      <>
-            <Header/>
+    <>
+      <Header />
 
-          <Home/>
-            <Footer/>
-      </>
+      <Home />
+
+      <Footer />
+    </>
   )
 }
-
-export default App

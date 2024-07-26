@@ -1,4 +1,4 @@
-import Logo from "../Logo/Logo.jsx";
+import Logo from "../logo/Logo.jsx";
 import  styles from "./Header.module.css"
 
 const navigation = [
@@ -8,7 +8,7 @@ const navigation = [
     {name: 'Search', href: '#'},
 ]
 
-function Header() {
+export default function Header() {
     return (
         <header className={styles.siteHeader}>
             <Logo/>
@@ -33,5 +33,3 @@ function Header() {
         </header>
     )
 }
-
-export default Header

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="a1aa0fe8-93ba-4ae6-b3ef-41525cb32dce" name="Changes" comment="Creating react components">
+      <change afterPath="$PROJECT_DIR$/client/src/components/category-card/CategoryCard.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/category-card/CategoryCard.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/hero/Hero.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/hero/Hero.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/post-card/PostCard.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/post-card/PostCard.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Footer/Footer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/footer/Footer.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Footer/Footer.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/footer/Footer.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Header/Header.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/header/Header.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Header/Header.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/header/Header.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Logo/Logo.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/logo/Logo.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Logo/Logo.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/logo/Logo.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/Home.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Home.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/index.html" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "hristianivanov"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/hristianivanov/SoftUni-ReactJs-project.git",
+    "accountId": "308dd987-bf77-417c-87d0-83af2500b40a"
+  }
+}]]></component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 0
+}]]></component>
+  <component name="ProjectId" id="2jfXXzfScWRw53qvu1dRdoatvHD" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "D:/GitHub/SoftUni-ReactJs-project/client/public",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "ts.external.directory.path": "D:\\Webstorm\\WebStorm 2024.1.5\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\GitHub\SoftUni-ReactJs-project\client\public" />
+      <recent name="D:\GitHub\SoftUni-ReactJs-project\client\src\assets" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\GitHub\SoftUni-ReactJs-project\client\src\components\Hero" />
+      <recent name="D:\GitHub\SoftUni-ReactJs-project\client\src\components\Footer" />
+      <recent name="D:\GitHub\SoftUni-ReactJs-project\client\src\components\Header" />
+      <recent name="D:\GitHub\SoftUni-ReactJs-project\client\src\components\Logo" />
+      <recent name="D:\GitHub\SoftUni-ReactJs-project\client\public" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-WS-241.18034.50" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a1aa0fe8-93ba-4ae6-b3ef-41525cb32dce" name="Changes" comment="" />
+      <created>1721779150574</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1721779150574</updated>
+      <workItem from="1721779153196" duration="14772000" />
+    </task>
+    <task id="LOCAL-00001" summary="Finish index page template">
+      <option name="closed" value="true" />
+      <created>1721849832315</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1721849832315</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Creating react components">
+      <option name="closed" value="true" />
+      <created>1721926511810</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1721926511810</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Finish index page template" />
+    <MESSAGE value="Creating react components" />
+    <option name="LAST_COMMIT_MESSAGE" value="Creating react components" />
+  </component>
+</project>
