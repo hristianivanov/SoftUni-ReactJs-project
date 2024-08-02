@@ -5,21 +5,38 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a1aa0fe8-93ba-4ae6-b3ef-41525cb32dce" name="Changes" comment="Creating react components">
-      <change afterPath="$PROJECT_DIR$/client/src/components/category-card/CategoryCard.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/components/category-card/CategoryCard.module.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/components/hero/Hero.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/components/hero/Hero.module.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/components/post-card/PostCard.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/components/post-card/PostCard.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/category-card/categoryCard.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/Detail.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/detailPage.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/css/layout.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/css/reset.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/css/site.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/css/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/css/typography.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/App.css" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/Footer/Footer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/footer/Footer.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/Footer/Footer.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/footer/Footer.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/Header/Header.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/header/Header.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/Header/Header.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/header/Header.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/Logo/Logo.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/logo/Logo.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/Logo/Logo.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/logo/Logo.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Blogs.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Card.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Search.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/category-card/CategoryCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/category-card/CategoryCard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/category-card/CategoryCard.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/public/svg/scroll.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/footer/Footer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/footer/Footer.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/footer/Footer.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/footer/footer.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/header/Header.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/header/Header.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/header/Header.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/header/header.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/hero/Hero.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/hero/Hero.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/hero/Hero.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/hero/hero.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/logo/Logo.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/logo/Logo.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/logo/Logo.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/logo/logo.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/post-card/PostCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/post-card/PostCard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/post-card/PostCard.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/post-card/postCard.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/index.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/pages/Home.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Home.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/template/css/style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,22 +46,22 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "hristianivanov"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;hristianivanov&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/hristianivanov/SoftUni-ReactJs-project.git",
-    "accountId": "308dd987-bf77-417c-87d0-83af2500b40a"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/hristianivanov/SoftUni-ReactJs-project.git&quot;,
+    &quot;accountId&quot;: &quot;308dd987-bf77-417c-87d0-83af2500b40a&quot;
   }
-}]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 0
-}]]></component>
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 0
+}</component>
   <component name="ProjectId" id="2jfXXzfScWRw53qvu1dRdoatvHD" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -53,20 +70,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "D:/GitHub/SoftUni-ReactJs-project/client/public",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "D:\\Webstorm\\WebStorm 2024.1.5\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/GitHub/SoftUni-ReactJs-project/client/public&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;D:\\Webstorm\\WebStorm 2024.1.5\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\GitHub\SoftUni-ReactJs-project\client\public" />
@@ -96,6 +113,9 @@
       <option name="presentableId" value="Default" />
       <updated>1721779150574</updated>
       <workItem from="1721779153196" duration="14772000" />
+      <workItem from="1722503557940" duration="3000" />
+      <workItem from="1722507625451" duration="9168000" />
+      <workItem from="1722580899239" duration="13250000" />
     </task>
     <task id="LOCAL-00001" summary="Finish index page template">
       <option name="closed" value="true" />

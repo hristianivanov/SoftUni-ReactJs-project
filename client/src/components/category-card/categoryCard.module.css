@@ -1,0 +1,56 @@
+.container {
+    position: relative;
+}
+
+.content {
+    width: 220px;
+    height: 280px;
+    border-radius: 8px;
+    background: var(--white, #FFFFFE);
+    cursor: pointer;
+}
+
+.background {
+    content: '';
+    position: absolute;
+    cursor: default;
+    z-index: -100;
+    width: 100px;
+    height: 100px;
+    background-image: radial-gradient(#999 5%, transparent 0);
+    background-size: 35px 35px;
+    bottom: calc(90px / 2 * -1);
+    right: calc(80px / 2 * -1);
+}
+
+.imageContainer {
+    position: absolute;
+    top: 65px;
+    left: 30px;
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    background: var(--white, #FFFFFE);
+}
+
+.content:hover {
+    background: var(--blue, #6246EA);
+}
+
+.content:hover .name {
+    color: var(--white, #FFFFFE);
+}
+
+.image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 33px;
+}
+
+.name {
+    position: absolute;
+    bottom: 95px;
+    left: 30px;
+}

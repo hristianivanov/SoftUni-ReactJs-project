@@ -1,24 +1,21 @@
+import {Link} from "react-router-dom";
+
 import Hero from "../components/hero/Hero.jsx";
 import CategoryCard from "../components/category-card/CategoryCard.jsx";
 import PostCard from "../components/post-card/PostCard.jsx";
+import SectionNameAndLink from "../components/section-name-link/SectionNameAndLink.jsx";
+
+import styles from './homePage.module.css'
 
 export default function Home() {
     return (
-        <main className="site-main">
+        <main className={styles.container}>
             <Hero/>
-            <section className="browse-category">
-                <div className="wrapper">
-                    <div className="section-name-link">
-                        <div className="section-name">
-                            <div className="sub-heading-1">Browse The Category</div>
-                            <img className="line-icon" src="svg/line.svg" alt=""/>
-                        </div>
-                        <div className="section-link">
-                            <div className="sub-heading-2">See All Category</div>
-                            <img className="arrow-icon" src="svg/arrow.svg" alt=""/>
-                        </div>
-                    </div>
-                    <div className="categories-list">
+            <section className={styles.categoryContainer}>
+                <img className={styles.scrollButton} src="/svg/scroll.svg" alt=""/>
+                <div className={"wrapper"}>
+                    <SectionNameAndLink sectionNameText={"Browse The Category"} sectionLinkText={"Category"}/>
+                    <div className={styles.categoryList}>
                         <CategoryCard/>
                         <CategoryCard/>
                         <CategoryCard/>
@@ -27,48 +24,29 @@ export default function Home() {
                     </div>
                 </div>
             </section>
-            <section className="articles">
-                <div className="wrapper">
-                    <section>
-                        <div className="section-name-link">
-                            <div className="section-name">
-                                <div className="sub-heading-1">Featured Article</div>
-                                <img className="line-icon" src="svg/line.svg" alt=""/>
-                            </div>
-                            <div className="section-link">
-                                <div className="sub-heading-2">See All Article</div>
-                                <img className="arrow-icon" src="svg/arrow.svg" alt=""/>
-                            </div>
-                        </div>
-                        <div className="section-bundle">
+            <section className={styles.articlesContainer}>
+                <div className={`${styles.wrapper} wrapper`}>
+                    <div className={styles.content}>
+                        <SectionNameAndLink sectionNameText={"Featured Article"} sectionLinkText={"Article"}/>
+                        <div className={styles.postCardList}>
                             <PostCard/>
                             <PostCard/>
                             <PostCard/>
                             <PostCard/>
                         </div>
-                    </section>
-                    <section>
-                        <div className="section-name-link">
-                            <div className="section-name">
-                                <div className="sub-heading-1">Featured Article</div>
-                                <img className="line-icon" src="svg/line.svg" alt=""/>
-                            </div>
-                            <div className="section-link">
-                                <div className="sub-heading-2">See All Article</div>
-                                <img className="arrow-icon" src="svg/arrow.svg" alt=""/>
-                            </div>
-                        </div>
-                        <div className="section-bundle">
+                    </div>
+                    <div className={styles.content}>
+                        <SectionNameAndLink sectionNameText={"Featured Article"} sectionLinkText={"Article"}/>
+                        <div className={styles.postCardList}>
                             <PostCard/>
                             <PostCard/>
                             <PostCard/>
                             <PostCard/>
                         </div>
-                    </section>
-                    <a href="#" className="button">More Article</a>
+                    </div>
+                    <Link to="/" className={styles.button}>More Article</Link>
                 </div>
             </section>
-
         </main>
     )
 }

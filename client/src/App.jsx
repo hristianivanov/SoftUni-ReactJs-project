@@ -1,18 +1,24 @@
-import './App.css'
+import { Routes, Route } from 'react-router-dom'
+
+import Home from "./pages/Home.jsx";
 import Header from "./components/header/Header.jsx";
 import Footer from "./components/footer/Footer.jsx";
-import Home from "./pages/Home.jsx";
 
+import './global.css';
 
 export default function App() {
 
   return (
     <>
-      <Header />
+      <div className="container">
+          <Header />
 
-      <Home />
+          <Routes>
+            <Route path='/' element={<Home />} />
+          </Routes>
 
-      <Footer />
+          <Footer />
+      </div>
     </>
   )
 }

@@ -1,9 +1,11 @@
-import styles from "./Logo.module.css"
+import {Link} from "react-router-dom";
+
+import styles from "./logo.module.css"
 
 export default function Logo() {
   return (
-      <div className={styles.siteLogo}>
-        <p className={styles.siteName}>Dasteen <span> .Blog</span></p>
-      </div>
+      <Link to="/" className={styles.container}>
+        <div className={styles.siteName}>Hristian <span> .Blog</span></div>
+      </Link>
   )
 }

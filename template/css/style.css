@@ -164,7 +164,7 @@
     justify-content: space-between;
 }
 
-.category-card {
+.container {
     position: relative;
     width: 220px;
     height: 280px;
@@ -184,7 +184,7 @@
 } */
 
 
-.category-card .category-icon {
+.container .imageContainer {
     position: absolute;
     top: 65px;
     left: 30px;
@@ -194,16 +194,16 @@
     background: var(--White, #FFFFFE);
 }
 
-.category-card:hover {
+.container:hover {
     background: var(--Blue, #6246EA);
 }
 
-.category-card:hover .category-name {
+.container:hover .category-name {
     color: var(--White, #FFFFFE);
 }
 
 
-.category-card .category-icon img {
+.container .imageContainer img {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -211,7 +211,7 @@
     width: 33px;
 }
 
-.category-card .category-name {
+.container .category-name {
     position: absolute;
     bottom: 95px;
     left: 30px;

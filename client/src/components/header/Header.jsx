@@ -1,34 +1,25 @@
-import Logo from "../logo/Logo.jsx";
-import  styles from "./Header.module.css"
+import {Link} from 'react-router-dom'
 
-const navigation = [
-    {name: 'Home', href: '#'},
-    {name: 'Category', href: '#'},
-    {name: 'About Me', href: '#'},
-    {name: 'Search', href: '#'},
-]
+import AuthLinks from '../auth-links/AuthLinks.jsx';
+import Logo from "../logo/Logo.jsx";
+
+import styles from "./header.module.css"
 
 export default function Header() {
     return (
-        <header className={styles.siteHeader}>
-            <Logo/>
-            <nav className={styles.mainNav}>
-                <ul>
-                    {
-                        navigation.map((item) => (
-                                <li key={item.name}>
-                                    <a href={item.href}>
-                                        {item.name}
-                                    </a>
-                                </li>
-                            )
-                        )
-                    }
-                </ul>
-            </nav>
-            <div className={styles.cta}>
-                <a className="login" href="#">Login</a>
-                <a className="register" href="#">Register</a>
+        <header className={styles.container}>
+            <div className={`${styles.wrapper} wrapper`}>
+                <Logo/>
+                <div className={styles.links}>
+                    <Link className={styles.link} to="/">Home</Link>
+                    <Link className={styles.link} to="/">Contact</Link>
+                    <Link className={styles.link} to="/">About Ме</Link>
+                    <div className={styles.searchContainer}>
+                        <img className={styles.searchIcon} src="/svg/search.svg" alt="" />
+                        <div className={styles.link}>Search</div>
+                    </div>
+                </div>
+                <AuthLinks/>
             </div>
         </header>
     )

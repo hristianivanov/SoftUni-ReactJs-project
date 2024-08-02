@@ -1,20 +1,22 @@
+import styles from './hero.module.css';
+
 export default function Hero() {
     return (
-        <section className="section-hero">
-            <div className="wrapper">
-                <div className="hero-left">
-                    <h1 className="heading-1">Hi, I’m Dasteen Front End Dev</h1>
-                    <p className="paragraph-1">
+        <section className={styles.container}>
+            <div className={`wrapper ${styles.wrapper}`}>
+                <div className={styles.textContainer}>
+                    <h1 className={`${styles.heading} heading-1`}>Hi, I’m Dasteen Front End Dev</h1>
+                    <div className={`${styles.subheading} paragraph-1`}>
                         On this blog I share tips and tricks, frameworks, projects,
                         tutorials, etc Make sure you subscribe to get the latest updates
-                    </p>
-                    <div className="search">
-                        <input type="text" placeholder="Enter youe email here"/>
-                        <a href="#" className="button">Subscribe</a>
+                    </div>
+                    <div className={styles.search}>
+                        <input className={styles.input} type="text" placeholder="Enter your email here"/>
+                        <a href="#" className={styles.button}>Subscribe</a>
                     </div>
                 </div>
-                <div className="hero-right">
-                    <img src="svg/hero.svg" alt=""/>
+                <div className={styles.imageContainer}>
+                    <img src="/svg/hero.svg" alt=""/>
                 </div>
             </div>
         </section>

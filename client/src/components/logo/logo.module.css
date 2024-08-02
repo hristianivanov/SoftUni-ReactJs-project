@@ -1,0 +1,39 @@
+.container {
+    display: inline-flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.link {
+    cursor: pointer;
+}
+
+.siteName {
+    color: #001858;
+    font-size: 36px;
+    font-weight: 600;
+}
+
+.siteName > * {
+    color: var(--blue, #6246EA);
+    font-size: 18px;
+    font-weight: 700;
+}
+
+@media screen and (max-width: 1280px) {
+    .siteName {
+        font-size: 32px;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+
+}
+
+@media screen and (max-width: 768px) {
+
+}
+
+@media screen and (max-width: 640px) {
+
+}
