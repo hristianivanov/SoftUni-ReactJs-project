@@ -1,0 +1,143 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --white: #fffffe;
+    --black: #2b2c34;
+    --blue: #6246ea;
+    --grey: #c0c0c0;
+    --dark-grey: #9a9494;
+    --light-grey-1: #eff0f3;
+    --light-grey-2: #e4e5e9;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+html {
+    font: 16px/1.5 "Plus Jakarta Sans", sans-serif;
+    color: var(--black, #2b2c34);
+}
+
+body {
+    max-width: 100vw;
+    overflow-x: hidden;
+}
+
+input {
+    outline: none;
+    border: 0;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+body,
+table,
+input,
+textarea,
+button {
+    font: inherit;
+}
+
+img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.site-container {
+    display: flex;
+    flex-direction: column;
+    background: var(--light-grey-1, #EFF0F3);
+    min-height: 100vh;
+}
+
+.wrapper {
+    max-width: 1536px;
+    margin: 0 auto;
+    padding: 0 95px;
+}
+
+.button {
+    background: var(--blue, #6246ea);
+    border-radius: 8px;
+    color: #FFFFFE;
+}
+
+.heading-1 {
+    font-size: 64px;
+    font-weight: bold;
+}
+
+.sub-heading-1 {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.sub-heading-2 {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.paragraph-1 {
+    font-size: 20px;
+    color: var(--dark-grey);
+}
+
+.paragraph-2 {
+    font-size: 18px;
+}
+
+.paragraph-3 {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.paragraph-4 {
+    font-size: 14px;
+}
+
+@media screen and (max-width:1536px) {
+    .wrapper {
+        max-width: 1366px;
+    }
+}
+
+@media screen and (max-width:1280px) {
+    .wrapper {
+        max-width: 1024px;
+    }
+}
+
+@media screen and (max-width:1024px) {
+    .wrapper {
+        max-width: 768px;
+        padding: 0 40px;
+    }
+}
+
+
+@media screen and (max-width:768px) {
+    .wrapper {
+        max-width: 640px;
+    }
+}
+
+
+@media screen and (max-width:640px) {
+    .wrapper {
+        max-width: 475px;
+    }
+}
