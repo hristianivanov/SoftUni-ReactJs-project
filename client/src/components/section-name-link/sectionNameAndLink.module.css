@@ -1,0 +1,20 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 50px;
+}
+
+.sectionName,
+.link {
+    display: flex;
+    gap: 12px;
+    align-items: stretch;
+}
+
+.arrow {
+    width: 6px;
+}
+
+.line {
+    width: 35px;
+}

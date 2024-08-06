@@ -2,13 +2,13 @@ import styles from './detailPage.module.css';
 
 function Detail() {
     return (
-        <div className={styles.container}>
+        <div className={`${styles.container}`}>
             <div className={styles.infoContainer}>
                 <div className={styles.textContainer}>
                     <h1 className={styles.title}>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h1>
                     <div className={styles.user}>
                         <div className={styles.userImageContainer}>
-                            {/*<image src="/p1.jpeg" alt="" fill className={styles.avatar} />*/}
+                            <image src="/book.png" alt="" className={styles.avatar} />
                         </div>
                         <div className={styles.userTextContainer}>
                             <span className={styles.username}>John Doe</span>
@@ -16,7 +16,7 @@ function Detail() {
                         </div>
                     </div>
                     <div className={styles.imageContainer}>
-                        {/*<image className={styles.image} src="" alt=""></image>*/}
+                        <image className={styles.image} src="/book.png" alt=""/>
                     </div>
                 </div>
                 <div className={styles.content}>
