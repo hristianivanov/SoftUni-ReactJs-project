@@ -12,7 +12,7 @@ export default function Header() {
                 <Logo/>
                 <div className={styles.links}>
                     <Link className={styles.link} to="/">Home</Link>
-                    <Link className={styles.link} to="/">Contact</Link>
+                    <Link className={styles.link} to="/contact">Contact</Link>
                     <Link className={styles.link} to="/">About Ме</Link>
                     <div className={styles.searchContainer}>
                         <img className={styles.searchIcon} src="/svg/search.svg" alt="" />
