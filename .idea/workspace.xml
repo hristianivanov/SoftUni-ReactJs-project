@@ -4,39 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a1aa0fe8-93ba-4ae6-b3ef-41525cb32dce" name="Changes" comment="Creating react components">
-      <change afterPath="$PROJECT_DIR$/client/src/components/category-card/categoryCard.module.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/pages/Detail.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/pages/detailPage.module.css" afterDir="false" />
+    <list default="true" id="a1aa0fe8-93ba-4ae6-b3ef-41525cb32dce" name="Changes" comment="Configure module styles">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/public/css/layout.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/public/css/reset.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/public/css/site.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/public/css/style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/public/css/typography.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/App.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/Blogs.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/Card.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/Search.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/category-card/CategoryCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/category-card/CategoryCard.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/category-card/CategoryCard.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/public/svg/scroll.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/footer/Footer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/footer/Footer.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/footer/Footer.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/footer/footer.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/header/Header.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/header/Header.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/header/Header.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/header/header.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/hero/Hero.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/hero/Hero.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/hero/Hero.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/hero/hero.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/logo/Logo.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/logo/Logo.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/logo/Logo.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/logo/logo.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/post-card/PostCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/post-card/PostCard.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/post-card/PostCard.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/post-card/postCard.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/index.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/Home.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Home.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/template/css/style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,7 +84,7 @@
       <workItem from="1721779153196" duration="14772000" />
       <workItem from="1722503557940" duration="3000" />
       <workItem from="1722507625451" duration="9168000" />
-      <workItem from="1722580899239" duration="13250000" />
+      <workItem from="1722580899239" duration="16701000" />
     </task>
     <task id="LOCAL-00001" summary="Finish index page template">
       <option name="closed" value="true" />
@@ -133,7 +102,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721926511810</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Configure module styles">
+      <option name="closed" value="true" />
+      <created>1722628861362</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1722628861362</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -142,6 +119,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Finish index page template" />
     <MESSAGE value="Creating react components" />
-    <option name="LAST_COMMIT_MESSAGE" value="Creating react components" />
+    <MESSAGE value="Configure module styles" />
+    <option name="LAST_COMMIT_MESSAGE" value="Configure module styles" />
   </component>
 </project>
