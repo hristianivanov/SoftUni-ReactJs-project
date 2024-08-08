@@ -1,9 +1,9 @@
 import {Link} from "react-router-dom";
 
-import Hero from "../components/hero/Hero.jsx";
-import CategoryCard from "../components/category-card/CategoryCard.jsx";
-import PostCard from "../components/post-card/PostCard.jsx";
-import SectionNameAndLink from "../components/section-name-link/SectionNameAndLink.jsx";
+import Hero from "../../components/hero/Hero.jsx";
+import CategoryCard from "../../components/category-card/CategoryCard.jsx";
+import PostCard from "../../components/post-card/PostCard.jsx";
+import SectionNameAndLink from "../../components/section-name-link/SectionNameAndLink.jsx";
 
 import styles from './homePage.module.css'
 
