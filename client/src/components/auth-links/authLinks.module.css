@@ -45,6 +45,7 @@
     justify-content: center;
     gap: 50px;
     font-size: 36px;
+    z-index: 1;
 }
 
 @media screen and (max-width: 1280px) {
@@ -53,9 +54,7 @@
     }
 }
 
-@media screen and (max-width: 1024px) {
-
-}
+@media screen and (max-width: 1024px) {}
 
 @media screen and (max-width: 768px) {
     .burger {
@@ -71,6 +70,4 @@
     }
 }
 
-@media screen and (max-width: 640px) {
-
-}
+@media screen and (max-width: 640px) {}

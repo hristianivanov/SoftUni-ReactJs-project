@@ -82,3 +82,39 @@
     margin-bottom: 26px;
 }
 
+@media screen and (max-width:1280px) {
+    .topContainer {
+        flex-direction: column;
+        gap: 4rem;
+    }
+
+    .topContainer .siteAbout {
+        display: none;
+    }
+}
+
+@media screen and (max-width:768px) {
+    .navigation {
+        flex-wrap: wrap;
+    }
+    .navigation .navSection {
+        flex-basis: 50%;
+        margin-bottom: 3em;
+    }
+    .navSection .navTitle {
+        text-align: center;
+    }
+    .navLinks {
+        align-items: center;
+    }
+}
+
+@media screen and (max-width:640px) {
+    .navigation .navSection {
+        flex-basis: 100%;
+    }
+    .bottomContainer {
+        display: none;
+    }
+}
+
