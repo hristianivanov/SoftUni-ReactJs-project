@@ -1,9 +1,13 @@
 .container {
     display: flex;
     gap: .3em;
+    align-items: center;
+    min-width: 190px;
+    justify-content: flex-end;
 }
 
 .link {
+    border: 0;
     color: #FFFFFE;
     background: var(--blue, #6246ea);
     border-radius: 8px;
@@ -13,6 +17,21 @@
     font-weight: 700;
     line-height: normal;
     text-transform: capitalize;
+    cursor: pointer;
+}
+
+.link:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.userEmail {
+    max-width: 170px;
+    overflow: hidden;
+    color: var(--black, #2b2c34);
+    font-weight: 800;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .burger {
@@ -56,6 +75,23 @@
     color: var(--black, #2b2c34);
 }
 
+.ctaButton {
+    border: 0;
+    background: transparent;
+    color: var(--black, #2b2c34);
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.mobileUser {
+    max-width: min(80vw, 420px);
+    overflow: hidden;
+    color: var(--blue, #6246ea);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 @media screen and (max-width: 1280px) {
     .link {
         font-size: 16px;
@@ -74,6 +110,10 @@
     }
 
     .container .link {
+        display: none;
+    }
+
+    .userEmail {
         display: none;
     }
 }

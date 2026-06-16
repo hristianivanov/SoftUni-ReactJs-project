@@ -1,89 +1,171 @@
-import { Link } from "react-router-dom";
+import { useEffect, useRef, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import useAuth from '../../auth/useAuth';
+import styles from '../auth/authForm.module.css';
+
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const minPasswordLength = 6;
 
 export default function Register() {
-    return (
-        <>
-            <div className="flex mt-10 mb-[7.5rem] min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-                <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-                    <img
-                        alt="Your Company"
-                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                        className="mx-auto h-10 w-auto"
-                    />
-                    <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-                        Create an account
-                    </h2>
-                </div>
+  const { register, authError, clearAuthError, isSubmitting } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
+  const confirmPasswordRef = useRef(null);
+  const errorRef = useRef(null);
+  const [values, setValues] = useState({ email: '', password: '', confirmPassword: '' });
+  const [errors, setErrors] = useState({});
+  const from = location.state?.from || { pathname: '/' };
 
-                <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                    <form action="#" method="POST" className="space-y-6">
-                        <div>
-                            <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                                Email address
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                    id="email"
-                                    name="email"
-                                    type="email"
-                                    required
-                                    autoComplete="email"
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                />
-                            </div>
-                        </div>
+  useEffect(() => {
+    clearAuthError();
+    return () => clearAuthError();
+  }, [clearAuthError]);
 
-                        <div>
-                            <div className="flex items-center justify-between">
-                                <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
-                                    Password
-                                </label>
-                            </div>
-                            <div className="mt-2">
-                                <input
-                                    id="password"
-                                    name="password"
-                                    type="password"
-                                    required
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                />
-                            </div>
-                        </div>
-                        <div>
-                            <div className="flex items-center justify-between">
-                                <label htmlFor="confirm-password" className="block text-sm font-medium leading-6 text-gray-900">
-                                    Confirm password
-                                </label>
-                            </div>
-                            <div className="mt-2">
-                                <input
-                                    id="confirm-password"
-                                    name="confirm-password"
-                                    type="password"
-                                    required
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                />
-                            </div>
-                        </div>
+  async function handleSubmit(event) {
+    event.preventDefault();
 
-                        <div>
-                            <button
-                                type="submit"
-                                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                            >
-                                Create an account
-                            </button>
-                        </div>
-                    </form>
+    if (isSubmitting) {
+      return;
+    }
 
-                    <p className="mt-10 text-center text-sm text-gray-500">
-                        Already have an account?{' '}
-                        <Link to="/login" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
-                            Login here
-                        </Link>
-                    </p>
-                </div>
-            </div>
-        </>
-    )
+    clearAuthError();
+    const nextErrors = validate(values);
+    setErrors(nextErrors);
+
+    if (Object.keys(nextErrors).length > 0) {
+      focusFirstError(nextErrors);
+      return;
+    }
+
+    try {
+      const session = await register(values.email.trim(), values.password);
+
+      if (session) {
+        setValues({ email: '', password: '', confirmPassword: '' });
+        navigate(from, { replace: true });
+      }
+    } catch {
+      setValues((current) => ({ ...current, password: '', confirmPassword: '' }));
+      requestAnimationFrame(() => errorRef.current?.focus());
+    }
+  }
+
+  function handleChange(event) {
+    const { name, value } = event.target;
+    setValues((current) => ({ ...current, [name]: value }));
+    setErrors((current) => ({ ...current, [name]: '' }));
+  }
+
+  function focusFirstError(nextErrors) {
+    if (nextErrors.email) {
+      emailRef.current?.focus();
+    } else if (nextErrors.password) {
+      passwordRef.current?.focus();
+    } else if (nextErrors.confirmPassword) {
+      confirmPasswordRef.current?.focus();
+    }
+  }
+
+  return (
+    <main className={styles.container}>
+      <section className={styles.panel}>
+        <p className={styles.brand}>Hristian .Blog</p>
+        <h1 className={styles.title}>Create an account</h1>
+        <p className={styles.intro}>Register with the local practice server to persist a session in this browser.</p>
+
+        {authError && (
+          <div ref={errorRef} tabIndex={-1} className={styles.errorSummary} role="alert">
+            {authError}
+          </div>
+        )}
+
+        <form className={styles.form} onSubmit={handleSubmit} noValidate>
+          <div className={styles.field}>
+            <label htmlFor="email">Email address</label>
+            <input
+              ref={emailRef}
+              id="email"
+              name="email"
+              type="email"
+              value={values.email}
+              onChange={handleChange}
+              autoComplete="email"
+              aria-invalid={Boolean(errors.email)}
+              aria-describedby={errors.email ? 'email-error' : undefined}
+            />
+            {errors.email && <span id="email-error" className={styles.fieldError}>{errors.email}</span>}
+          </div>
+
+          <div className={styles.field}>
+            <label htmlFor="password">Password</label>
+            <input
+              ref={passwordRef}
+              id="password"
+              name="password"
+              type="password"
+              value={values.password}
+              onChange={handleChange}
+              autoComplete="new-password"
+              aria-invalid={Boolean(errors.password)}
+              aria-describedby={errors.password ? 'password-error' : undefined}
+            />
+            {errors.password && <span id="password-error" className={styles.fieldError}>{errors.password}</span>}
+          </div>
+
+          <div className={styles.field}>
+            <label htmlFor="confirmPassword">Confirm password</label>
+            <input
+              ref={confirmPasswordRef}
+              id="confirmPassword"
+              name="confirmPassword"
+              type="password"
+              value={values.confirmPassword}
+              onChange={handleChange}
+              autoComplete="new-password"
+              aria-invalid={Boolean(errors.confirmPassword)}
+              aria-describedby={errors.confirmPassword ? 'confirm-password-error' : undefined}
+            />
+            {errors.confirmPassword && (
+              <span id="confirm-password-error" className={styles.fieldError}>{errors.confirmPassword}</span>
+            )}
+          </div>
+
+          <button className={styles.button} type="submit" disabled={isSubmitting}>
+            {isSubmitting ? 'Creating account...' : 'Create account'}
+          </button>
+        </form>
+
+        <p className={styles.footer}>
+          Already have an account? <Link to="/login" state={{ from }}>Login here</Link>
+        </p>
+      </section>
+    </main>
+  );
+}
+
+function validate(values) {
+  const errors = {};
+  const email = values.email.trim();
+
+  if (!email) {
+    errors.email = 'Email is required.';
+  } else if (!emailPattern.test(email)) {
+    errors.email = 'Enter a valid email address.';
+  }
+
+  if (!values.password) {
+    errors.password = 'Password is required.';
+  } else if (values.password.length < minPasswordLength) {
+    errors.password = `Password must be at least ${minPasswordLength} characters.`;
+  }
+
+  if (!values.confirmPassword) {
+    errors.confirmPassword = 'Confirm your password.';
+  } else if (values.confirmPassword !== values.password) {
+    errors.confirmPassword = 'Passwords must match.';
+  }
+
+  return errors;
 }

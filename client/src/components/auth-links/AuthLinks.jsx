@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
+import useAuth from '../../auth/useAuth';
 import styles from './authLinks.module.css';
 
 const publicLinks = [
@@ -9,17 +10,36 @@ const publicLinks = [
 ];
 
 export default function AuthLinks() {
+  const { user, isAuthenticated, logout, isSubmitting } = useAuth();
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
 
   function closeMenu() {
     setOpen(false);
   }
 
+  async function handleLogout() {
+    await logout();
+    closeMenu();
+    navigate('/', { replace: true });
+  }
+
   return (
     <>
       <div className={styles.container}>
-        <Link className={styles.link} to="/login">Login</Link>
-        <Link className={styles.link} to="/register">Register</Link>
+        {isAuthenticated ? (
+          <>
+            <span className={styles.userEmail} title={user.email}>{user.email}</span>
+            <button className={styles.link} type="button" onClick={handleLogout} disabled={isSubmitting}>
+              Logout
+            </button>
+          </>
+        ) : (
+          <>
+            <Link className={styles.link} to="/login">Login</Link>
+            <Link className={styles.link} to="/register">Register</Link>
+          </>
+        )}
       </div>
       <button
         className={styles.burger}
@@ -45,8 +65,19 @@ export default function AuthLinks() {
               {link.label}
             </NavLink>
           ))}
-          <Link className={styles.cta} to="/login" onClick={closeMenu}>Login</Link>
-          <Link className={styles.cta} to="/register" onClick={closeMenu}>Register</Link>
+          {isAuthenticated ? (
+            <>
+              <span className={styles.mobileUser}>{user.email}</span>
+              <button className={styles.ctaButton} type="button" onClick={handleLogout} disabled={isSubmitting}>
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <Link className={styles.cta} to="/login" onClick={closeMenu}>Login</Link>
+              <Link className={styles.cta} to="/register" onClick={closeMenu}>Register</Link>
+            </>
+          )}
         </nav>
       )}
     </>

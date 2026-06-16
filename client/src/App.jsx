@@ -8,6 +8,7 @@ import NotFound from './pages/not-found/NotFound.jsx';
 import Register from './pages/register/Register.jsx';
 import Footer from './components/footer/Footer.jsx';
 import Header from './components/header/Header.jsx';
+import GuestOnlyRoute from './routes/GuestOnlyRoute.jsx';
 import './global.css';
 
 export default function App() {
@@ -19,8 +20,10 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/articles" element={<Articles />} />
         <Route path="/articles/:articleId" element={<Detail />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route element={<GuestOnlyRoute />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Route>
         <Route path="/contact" element={<Contact />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
