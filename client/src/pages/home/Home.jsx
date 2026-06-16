@@ -7,6 +7,7 @@ import Hero from '../../components/hero/Hero.jsx';
 import PostCard from '../../components/post-card/PostCard.jsx';
 import SectionNameAndLink from '../../components/section-name-link/SectionNameAndLink.jsx';
 import { getCategoryCounts } from '../../utils/articles';
+import usePageTitle from '../../hooks/usePageTitle';
 import styles from './homePage.module.css';
 
 const categoryIcons = {
@@ -19,6 +20,7 @@ const categoryIcons = {
 };
 
 export default function Home() {
+  usePageTitle('Home');
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -69,7 +71,7 @@ export default function Home() {
   }, [articles]);
 
   return (
-    <main className={styles.container}>
+    <main id="main-content" className={styles.container}>
       <Hero />
       <section className={styles.categoryContainer}>
         <img className={styles.scrollButton} src="/svg/scroll.svg" alt="" />

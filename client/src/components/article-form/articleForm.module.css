@@ -58,6 +58,11 @@
     font-weight: 700;
 }
 
+.counter {
+    color: var(--dark-grey, #9a9494);
+    font-size: 14px;
+}
+
 .errorSummary {
     padding: 14px 16px;
     border: 1px solid rgba(180, 35, 24, 0.28);

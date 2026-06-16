@@ -4,11 +4,18 @@ import * as articleService from '../../api/articleService';
 import * as commentService from '../../api/commentService';
 import useAuth from '../../auth/useAuth';
 import { EmptyState, ErrorState, LoadingState } from '../../components/app-state/AppState.jsx';
+import ConfirmationDialog from '../../components/confirmation-dialog/ConfirmationDialog.jsx';
+import usePageTitle from '../../hooks/usePageTitle';
 import {
   fallbackAvatar,
   fallbackImage,
   formatArticleDate,
+  getParagraphs,
+  handleImageFallback,
   normalizeArticleId,
+  resolveImageUrl,
+  safeText,
+  toDateTime,
 } from '../../utils/articles';
 import { createAuthorFromUser } from '../../utils/authors';
 import styles from './detailPage.module.css';
@@ -38,6 +45,8 @@ function Detail() {
   const commentSaveRef = useRef(false);
   const commentDeleteRef = useRef('');
 
+  usePageTitle(article?.title || 'Article details');
+
   useEffect(() => {
     let ignore = false;
 
@@ -59,7 +68,7 @@ function Detail() {
         }
       } catch (err) {
         if (!ignore) {
-          if (/not found|404/i.test(err.message)) {
+          if (err.status === 404) {
             setNotFound(true);
           } else {
             setError(err.message);
@@ -183,7 +192,7 @@ function Detail() {
 
     try {
       await commentService.remove(commentId, user.accessToken);
-      setComments((current) => current.filter((comment) => (comment._id || comment.id) !== commentId));
+      setComments((current) => current.filter((comment, index) => getCommentKey(comment, index) !== commentId));
       setCommentDeleteConfirmId('');
     } catch (err) {
       setCommentDeleteError(err.message);
@@ -195,7 +204,7 @@ function Detail() {
 
   if (loading) {
     return (
-      <main className={`${styles.container} wrapper`}>
+      <main id="main-content" className={`${styles.container} wrapper`}>
         <LoadingState message="Loading article..." />
       </main>
     );
@@ -203,7 +212,7 @@ function Detail() {
 
   if (notFound) {
     return (
-      <main className={`${styles.container} wrapper`}>
+      <main id="main-content" className={`${styles.container} wrapper`}>
         <ErrorState
           title="Article not found"
           message="The article you are looking for is missing or was removed."
@@ -216,19 +225,24 @@ function Detail() {
 
   if (error) {
     return (
-      <main className={`${styles.container} wrapper`}>
+      <main id="main-content" className={`${styles.container} wrapper`}>
         <ErrorState title="Could not load article" message={error} />
       </main>
     );
   }
 
   const createdOn = article._createdOn || article.createdOn;
-  const authorName = article.authorName || 'Hristian Ivanov';
-  const articleKey = normalizeArticleId(article);
+  const title = safeText(article.title, 'Untitled article');
+  const summary = safeText(article.summary, 'No summary is available for this article.');
+  const authorName = safeText(article.authorName, 'Hristian Ivanov');
+  const category = safeText(article.category, 'General');
+  const readingTime = Number.isFinite(Number(article.readingTime)) ? Number(article.readingTime) : 3;
+  const articleKey = normalizeArticleId(article) || articleId;
+  const paragraphs = getParagraphs(article.content);
   const isOwner = Boolean(user && article._ownerId === user._id);
 
   return (
-    <main className={styles.container}>
+    <main id="main-content" className={styles.container}>
       <article className={`${styles.article} wrapper`}>
         <div className={styles.topBar}>
           <Link className={styles.backLink} to="/articles">Back to articles</Link>
@@ -249,47 +263,48 @@ function Detail() {
 
         {articleActionError && <div className={styles.actionError} role="alert">{articleActionError}</div>}
 
-        {showDeleteConfirm && (
-          <section className={styles.confirmBox} aria-live="polite">
-            <h2>Delete this article?</h2>
-            <p>
-              This will permanently delete <strong>{article.title}</strong>.
-            </p>
-            <div className={styles.confirmActions}>
-              <button type="button" onClick={handleArticleDelete} disabled={isDeletingArticle}>
-                {isDeletingArticle ? 'Deleting...' : 'Confirm delete'}
-              </button>
-              <button type="button" onClick={() => setShowDeleteConfirm(false)} disabled={isDeletingArticle}>
-                Cancel
-              </button>
-            </div>
-          </section>
-        )}
+        <ConfirmationDialog
+          isOpen={showDeleteConfirm}
+          title="Delete this article?"
+          description={`This will permanently delete "${title}".`}
+          confirmLabel="Delete article"
+          isBusy={isDeletingArticle}
+          onConfirm={handleArticleDelete}
+          onCancel={() => setShowDeleteConfirm(false)}
+        />
 
         <header className={styles.header}>
-          <p className={styles.category}>{article.category || 'General'}</p>
-          <h1 className="heading-1">{article.title}</h1>
-          <p className={`${styles.summary} paragraph-1`}>{article.summary}</p>
+          <p className={styles.category}>{category}</p>
+          <h1 className="heading-1">{title}</h1>
+          <p className={`${styles.summary} paragraph-1`}>{summary}</p>
           <div className={styles.meta}>
-            <img src={article.authorAvatar || fallbackAvatar} alt={`${authorName} avatar`} />
+            <img
+              src={resolveImageUrl(article.authorAvatar, fallbackAvatar)}
+              alt={`${authorName} avatar`}
+              onError={(event) => handleImageFallback(event, fallbackAvatar)}
+            />
             <div>
               <strong>{authorName}</strong>
               <div className={styles.metaText}>
-                <time dateTime={createdOn ? new Date(createdOn).toISOString() : undefined}>
+                <time dateTime={toDateTime(createdOn)}>
                   {formatArticleDate(createdOn)}
                 </time>
                 <span aria-hidden="true">.</span>
-                <span>{article.readingTime || 3} min read</span>
+                <span>{readingTime} min read</span>
               </div>
             </div>
           </div>
         </header>
         <div className={styles.imageContainer}>
-          <img src={article.imageUrl || fallbackImage} alt={article.title} />
+          <img
+            src={resolveImageUrl(article.imageUrl)}
+            alt={title}
+            onError={(event) => handleImageFallback(event, fallbackImage)}
+          />
         </div>
         <div className={styles.content}>
-          {article.content.split('\n').map((paragraph) => (
-            <p key={`${articleKey}-${paragraph.slice(0, 24)}`}>{paragraph}</p>
+          {paragraphs.map((paragraph, index) => (
+            <p key={`${articleKey}-paragraph-${index}`}>{paragraph}</p>
           ))}
         </div>
       </article>
@@ -309,9 +324,12 @@ function Detail() {
               }}
               rows={4}
               maxLength={1000}
+              required
+              aria-required="true"
               aria-invalid={Boolean(commentError)}
-              aria-describedby={commentError ? 'comment-error' : undefined}
+              aria-describedby={commentError ? 'comment-error comment-counter' : 'comment-counter'}
             />
+            <span id="comment-counter" className={styles.counter}>{commentText.length}/1000 characters</span>
             {commentError && <span id="comment-error" className={styles.fieldError}>{commentError}</span>}
             {commentServerError && <div className={styles.actionError} role="alert">{commentServerError}</div>}
             <button type="submit" disabled={isSavingComment}>
@@ -337,49 +355,44 @@ function Detail() {
         )}
         {!commentsLoading && !commentLoadError && comments.length > 0 && (
           <ul className={styles.commentList}>
-            {comments.map((comment) => {
-              const commentId = comment._id || comment.id;
+            {comments.map((comment, index) => {
+              const commentId = getCommentKey(comment, index);
               const isCommentOwner = Boolean(user && comment._ownerId === user._id);
+              const commentAuthor = safeText(comment.authorName, 'Reader');
+              const text = safeText(comment.text || comment.content, 'This comment has no readable text.');
 
               return (
                 <li key={commentId} className={styles.comment}>
                   <div className={styles.commentHeader}>
-                    <img src={comment.authorAvatar || fallbackAvatar} alt={`${comment.authorName || 'Reader'} avatar`} />
+                    <img
+                      src={resolveImageUrl(comment.authorAvatar, fallbackAvatar)}
+                      alt={`${commentAuthor} avatar`}
+                      onError={(event) => handleImageFallback(event, fallbackAvatar)}
+                    />
                     <div>
-                      <strong>{comment.authorName || 'Reader'}</strong>
-                      <time dateTime={comment._createdOn ? new Date(comment._createdOn).toISOString() : undefined}>
+                      <strong>{commentAuthor}</strong>
+                      <time dateTime={toDateTime(comment._createdOn)}>
                         {formatArticleDate(comment._createdOn)}
                       </time>
                     </div>
                   </div>
-                  <p>{comment.text || comment.content}</p>
+                  <p>{text}</p>
                   {isCommentOwner && (
                     <div className={styles.commentActions}>
-                      {commentDeleteConfirmId === commentId ? (
-                        <>
-                          <span>Delete this comment?</span>
-                          <button
-                            type="button"
-                            onClick={() => handleCommentDelete(commentId)}
-                            disabled={deletingCommentId === commentId}
-                          >
-                            {deletingCommentId === commentId ? 'Deleting...' : 'Confirm'}
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => setCommentDeleteConfirmId('')}
-                            disabled={deletingCommentId === commentId}
-                          >
-                            Cancel
-                          </button>
-                        </>
-                      ) : (
-                        <button type="button" onClick={() => setCommentDeleteConfirmId(commentId)}>
-                          Delete
-                        </button>
-                      )}
+                      <button type="button" onClick={() => setCommentDeleteConfirmId(commentId)}>
+                        Delete
+                      </button>
                     </div>
                   )}
+                  <ConfirmationDialog
+                    isOpen={commentDeleteConfirmId === commentId}
+                    title="Delete this comment?"
+                    description="This will permanently delete your comment from this article."
+                    confirmLabel="Delete comment"
+                    isBusy={deletingCommentId === commentId}
+                    onConfirm={() => handleCommentDelete(commentId)}
+                    onCancel={() => setCommentDeleteConfirmId('')}
+                  />
                   {commentDeleteConfirmId === commentId && commentDeleteError && (
                     <div className={styles.actionError} role="alert">{commentDeleteError}</div>
                   )}
@@ -391,6 +404,10 @@ function Detail() {
       </section>
     </main>
   );
+}
+
+function getCommentKey(comment, index) {
+  return comment._id || comment.id || `comment-${index}`;
 }
 
 export default Detail;

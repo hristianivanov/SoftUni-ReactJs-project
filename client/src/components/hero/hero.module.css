@@ -24,11 +24,12 @@
 
 .heading {
     width: 13ch;
+    max-width: 100%;
 }
 
 .subheading {
     padding: 4px;
-    width: 45ch;
+    max-width: 45ch;
     height: 50px;
     position: relative;
 }
@@ -67,6 +68,7 @@
     display: flex;
     align-items: center;
     flex: 1 1 290px;
+    min-width: 0;
     gap: 10px;
     padding: 21px 200px 21px 25px;
     border-radius: 8px;
@@ -134,7 +136,7 @@
     }
 
     .textContainer .heading {
-        font-size: 40px;
+        font-size: 39px;
     }
 }
 

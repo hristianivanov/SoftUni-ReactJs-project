@@ -9,10 +9,10 @@ export default function Hero() {
     <section className={styles.container}>
       <div className={`wrapper ${styles.wrapper}`}>
         <div className={styles.textContainer}>
-          <h1 className={`${styles.heading} heading-1`}>Hi, I am Hristian Front End Dev</h1>
+          <h1 className={`${styles.heading} heading-1`}>Hi, I&apos;m Hristian, a Software Developer</h1>
           <p className={`${styles.subheading} paragraph-1`}>
-            I write about React, JavaScript, APIs, routing, and the small decisions
-            that turn a course project into a usable application.
+            I write about React, JavaScript, APIs, and full-stack learning while turning course projects
+            into usable applications.
           </p>
           <form className={styles.search} onSubmit={handleSubmit}>
             <label className={styles.srOnly} htmlFor="subscription-email">Email address</label>

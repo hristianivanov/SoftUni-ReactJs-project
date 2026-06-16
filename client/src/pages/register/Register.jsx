@@ -1,12 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import useAuth from '../../auth/useAuth';
+import usePageTitle from '../../hooks/usePageTitle';
 import styles from '../auth/authForm.module.css';
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const minPasswordLength = 6;
 
 export default function Register() {
+  usePageTitle('Register');
   const { register, authError, clearAuthError, isSubmitting } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -69,7 +71,7 @@ export default function Register() {
   }
 
   return (
-    <main className={styles.container}>
+    <main id="main-content" className={styles.container}>
       <section className={styles.panel}>
         <p className={styles.brand}>Hristian .Blog</p>
         <h1 className={styles.title}>Create an account</h1>

@@ -5,9 +5,11 @@ import { EmptyState, ErrorState, LoadingState } from '../../components/app-state
 import CategoryCard from '../../components/category-card/CategoryCard.jsx';
 import PostCard from '../../components/post-card/PostCard.jsx';
 import { filterArticles, getCategoryCounts } from '../../utils/articles';
+import usePageTitle from '../../hooks/usePageTitle';
 import styles from './articles.module.css';
 
 export default function Articles() {
+  usePageTitle('Articles');
   const [searchParams, setSearchParams] = useSearchParams();
   const [articles, setArticles] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -64,7 +66,7 @@ export default function Articles() {
   }
 
   return (
-    <main className={styles.container}>
+    <main id="main-content" className={styles.container}>
       <section className={`${styles.hero} wrapper`}>
         <div>
           <p className={styles.eyebrow}>Developer articles</p>

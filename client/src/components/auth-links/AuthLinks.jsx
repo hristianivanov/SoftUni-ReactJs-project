@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import useAuth from '../../auth/useAuth';
 import styles from './authLinks.module.css';
@@ -20,9 +20,33 @@ export default function AuthLinks() {
   const { user, isAuthenticated, logout, isSubmitting } = useAuth();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const menuButtonRef = useRef(null);
+
+  useEffect(() => {
+    if (!open) {
+      return undefined;
+    }
+
+    document.body.classList.add('mobile-menu-open');
+
+    function handleKeyDown(event) {
+      if (event.key === 'Escape') {
+        setOpen(false);
+        menuButtonRef.current?.focus();
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.classList.remove('mobile-menu-open');
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [open]);
 
   function closeMenu() {
     setOpen(false);
+    menuButtonRef.current?.focus();
   }
 
   async function handleLogout() {
@@ -49,6 +73,7 @@ export default function AuthLinks() {
         )}
       </div>
       <button
+        ref={menuButtonRef}
         className={styles.burger}
         type="button"
         aria-label="Toggle navigation menu"

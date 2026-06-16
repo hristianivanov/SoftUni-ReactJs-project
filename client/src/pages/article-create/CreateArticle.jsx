@@ -4,9 +4,11 @@ import * as articleService from '../../api/articleService';
 import useAuth from '../../auth/useAuth';
 import ArticleForm from '../../components/article-form/ArticleForm.jsx';
 import { createAuthorFromUser } from '../../utils/authors';
+import usePageTitle from '../../hooks/usePageTitle';
 import styles from './articleEditor.module.css';
 
 export default function CreateArticle() {
+  usePageTitle('Create article');
   const { user } = useAuth();
   const navigate = useNavigate();
   const [serverError, setServerError] = useState('');
@@ -31,7 +33,7 @@ export default function CreateArticle() {
   }
 
   return (
-    <main className={styles.container}>
+    <main id="main-content" className={styles.container}>
       <section className={`${styles.panel} wrapper`}>
         <p className={styles.eyebrow}>Author workspace</p>
         <h1 className="heading-1">Create Article</h1>

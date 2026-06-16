@@ -17,6 +17,7 @@ import './global.css';
 export default function App() {
   return (
     <div className="site-container">
+      <a className="skip-link" href="#main-content">Skip to main content</a>
       <Header />
 
       <Routes>

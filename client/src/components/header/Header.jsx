@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import useAuth from '../../auth/useAuth';
 import AuthLinks from '../auth-links/AuthLinks.jsx';
 import Logo from '../logo/Logo.jsx';
@@ -12,11 +12,15 @@ export default function Header() {
       <div className={`${styles.wrapper} wrapper`}>
         <Logo />
         <nav className={styles.links} aria-label="Main navigation">
-          <Link className={styles.link} to="/">Home</Link>
-          <Link className={styles.link} to="/articles">Articles</Link>
-          {isAuthenticated && <Link className={styles.link} to="/articles/create">Write article</Link>}
-          <Link className={styles.link} to="/contact">Contact</Link>
-          <Link className={styles.searchContainer} to="/articles">
+          <NavLink className={({ isActive }) => `${styles.link} ${isActive ? styles.active : ''}`} to="/">Home</NavLink>
+          <NavLink className={({ isActive }) => `${styles.link} ${isActive ? styles.active : ''}`} to="/articles">Articles</NavLink>
+          {isAuthenticated && (
+            <NavLink className={({ isActive }) => `${styles.link} ${isActive ? styles.active : ''}`} to="/articles/create">
+              Write article
+            </NavLink>
+          )}
+          <NavLink className={({ isActive }) => `${styles.link} ${isActive ? styles.active : ''}`} to="/contact">Contact</NavLink>
+          <Link className={styles.searchContainer} to="/articles" aria-label="Search articles">
             <img className={styles.searchIcon} src="/svg/search.svg" alt="" />
             <span className={styles.link}>Search</span>
           </Link>

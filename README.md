@@ -1,87 +1,177 @@
 # Hristian Blog
 
-Developer blogging platform built for the SoftUni ReactJS course. The project keeps the original Figma-derived template and connects the public blog, authentication, owner-managed articles, and comments to the local SoftUni practice server.
+Hristian Blog is a React blogging project for the SoftUni ReactJS course. It keeps the original Figma-inspired visual direction, but the app now runs as a real local full-stack demo: public article browsing, authentication, owner-managed articles, and comments all talk to the bundled SoftUni practice server.
 
-## Setup
+## Features
 
-Install the client dependencies:
+- Public home page with featured and recent articles.
+- Article catalog with category filtering and client-side search.
+- Article detail pages with defensive loading, empty, error, and not-found states.
+- Registration, login, logout, guest-only auth routes, and persisted sessions.
+- Protected create/edit article routes.
+- Owner-only article edit/delete controls.
+- Authenticated comment creation and owner-only comment deletion.
+- Accessible confirmation dialogs for destructive actions.
+- Responsive desktop and mobile navigation with skip-link support.
+
+## Tech Stack
+
+- React 18, Vite, React Router, JavaScript.
+- CSS Modules plus the existing Tailwind base setup.
+- React Context for auth state.
+- Native `fetch` wrapped by `client/src/api/requester.js`.
+- Vitest, Testing Library, and Playwright for quality checks.
+- Local SoftUni practice server from the `server` directory.
+
+## Local Setup
+
+Install root helper dependencies:
+
+```powershell
+npm install
+```
+
+Install client dependencies:
 
 ```powershell
 cd client
 npm install
 ```
 
-Start the local server and Vite client from the repository root:
+Start the API server and Vite client from the repository root:
 
 ```powershell
 npm run dev
 ```
 
-The server runs at `http://localhost:3030` and the client runs at `http://localhost:5173`.
+The API runs at `http://localhost:3030` and the client runs at `http://localhost:5173`.
+
+## Environment
+
+The client reads the API URL from `VITE_API_BASE_URL`.
+
+```powershell
+Copy-Item client\.env.example client\.env.local
+```
+
+Default local value:
+
+```env
+VITE_API_BASE_URL=http://localhost:3030
+```
 
 ## Development Data
 
-With `npm run dev` running, seed the public article data from a second terminal:
+With `npm run dev` running, seed the local server from a second terminal:
 
 ```powershell
 npm run seed
 ```
 
-The seed script is idempotent. It creates a local demo author only when needed, skips duplicate article creation when `/data/articles` already has records, and uses obvious local credentials for the local practice server only:
+The seed script is idempotent. It creates a demo author only when needed and skips duplicate article creation when articles already exist.
+
+Local demo credentials:
 
 - Email: `demo@local.test`
 - Password: `demo123`
 
-Seeded articles and seeded comments are created through authenticated API requests, so the demo account owns them and can edit/delete them. You can override the API URL with `API_BASE_URL` or `VITE_API_BASE_URL`.
+These credentials are for the local practice server only.
 
-## Authentication
+## Useful Commands
 
-The app supports registration, login, logout, guest-only login/register routes, auth-aware desktop and mobile navigation, and persisted sessions. Sessions are stored in `localStorage` for this educational local-server project. Only `_id`, `email`, and `accessToken` are stored; passwords are never stored.
+Run client lint:
 
-Login and registration validate required fields, email format, and password requirements before submitting. Server errors, such as duplicate registration or invalid credentials, are displayed in the form. Refreshing the browser restores the authenticated navigation from the stored session.
+```powershell
+cd client
+npm run lint
+```
 
-## Articles And Comments
+Run unit and component tests:
 
-Authenticated users can create articles at `/articles/create`. Article creation validates title, summary, content, image URL, category, reading time, and featured status. New articles derive the author name from the signed-in email and let the server assign `_ownerId` and timestamps.
+```powershell
+cd client
+npm run test:run
+```
 
-Article owners can edit their articles at `/articles/:articleId/edit` and delete them from the article details page after confirmation. Non-owners do not see owner controls in the UI, and the server remains the authority for rejecting unauthorized writes.
+Run Playwright browser smoke tests:
 
-Authenticated users can create comments on article details. Comment owners can delete their own comments after confirmation. Guests see a login prompt instead of the comment form.
+```powershell
+cd client
+npm run test:e2e
+```
 
-## Features
+Build the client:
 
-- Home page with featured articles, recent articles, and category cards.
-- Article catalog at `/articles`.
-- Client-side search by title, summary, category, and author.
-- Category filtering through `/articles?category=React`.
-- Article detail pages at `/articles/:articleId`.
-- Loading, error, empty, article not-found, and wildcard not-found states.
-- Responsive navigation with an accessible mobile menu.
-- Registration, login, logout, persisted sessions, and guest route protection.
-- Protected article create/edit routes.
-- Owner-only article edit/delete controls.
-- Authenticated comment creation and owner-only comment deletion.
+```powershell
+cd client
+npm run build
+```
+
+Seed local API data:
+
+```powershell
+npm run seed
+```
 
 ## Architecture
 
-- React 18, Vite, React Router, JavaScript, and CSS Modules.
-- React Context for authentication state.
-- Native `fetch` through `client/src/api/requester.js`.
-- API calls live in service modules under `client/src/api`.
-- Session storage is isolated in `client/src/auth/sessionStorage.js`.
-- Public and write content uses the protected SoftUni collection endpoints `/data/articles` and `/data/comments`.
-- Authentication uses `/users/register`, `/users/login`, and `/users/logout`.
-- `server/data/blog.json` remains source material for development seed data.
-- The generated `server/server.js` is intentionally unchanged.
+- `client/src/api` contains API service modules for auth, articles, comments, and requester errors.
+- `client/src/auth` owns auth context and local session persistence.
+- `client/src/pages` contains route-level screens.
+- `client/src/components` contains shared UI such as forms, navigation, post cards, app states, and confirmation dialogs.
+- `server/data/blog.json` is source material for the seed script.
+- `server/server.js` is the generated SoftUni practice server and is intentionally left unchanged.
 
-## Package Layout
+## API Surface
 
-The Vite application owns its dependencies in `client/package.json`. The root package remains as a thin workspace helper for starting both the server and client and for running the development seed script.
+The app uses these local server endpoints:
 
-## Current Limitations
+- `POST /users/register`
+- `POST /users/login`
+- `GET /users/logout`
+- `GET /data/articles`
+- `GET /data/articles/:id`
+- `POST /data/articles`
+- `PUT /data/articles/:id`
+- `DELETE /data/articles/:id`
+- `GET /data/comments`
+- `POST /data/comments`
+- `DELETE /data/comments/:id`
 
-There is no rich-text editor, image upload, likes, bookmarks, profile editing, password recovery, admin dashboard, deployment configuration, or automated browser test suite yet.
+## Authentication And Ownership
 
-## Next Milestone Scope
+Sessions are stored in `localStorage` for this educational local-server project. The stored session contains `_id`, `email`, and `accessToken`; passwords are never stored.
 
-The next pass should focus on responsive polish, accessibility review, visual QA, optional service/form tests, and final README screenshots or deployment notes.
+The UI hides edit/delete controls from guests and non-owners, but the server remains the source of truth for authorization. Owner checks are duplicated in the UI only to keep the experience clear.
+
+## Testing
+
+The test suite covers:
+
+- Requester success, structured server errors, and network failures.
+- Auth session storage behavior.
+- Protected and guest-only route guards.
+- Login and registration form validation/server errors.
+- Article form validation.
+- Owner-only article/comment controls in the detail view.
+- Browser smoke flows for public browsing, auth, create/edit/delete article, comments, mobile navigation, and responsive overflow checks.
+
+## Deployment Status
+
+This repository is not production-deployed yet. A frontend-only deploy would render the static app, but auth, article writes, and comments require a reachable API. See `DEPLOYMENT.md` for the exact blockers and suggested deployment milestone.
+
+## Known Limitations
+
+- No rich-text editor.
+- No image upload or media storage.
+- No likes, bookmarks, profile editing, or password recovery.
+- No admin dashboard.
+- Local practice server data is not a production persistence layer.
+
+## Future Improvements
+
+- Deploy or replace the API with a production-ready backend.
+- Add screenshots after deployment URLs are stable.
+- Add richer article formatting.
+- Add profile pages and saved articles.
+- Add API-level contract tests around ownership and error cases.

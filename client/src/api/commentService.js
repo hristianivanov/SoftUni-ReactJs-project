@@ -6,9 +6,9 @@ const endpoint = '/data/comments';
 export function getByArticleId(articleId) {
   return requester('GET', `${endpoint}${createQuery({
     where: `articleId="${articleId}"`,
-    sortBy: '_createdOn asc',
   })}`)
     .then((comments) => comments || [])
+    .then(sortOldestFirst)
     .catch(returnEmptyCollection);
 }
 
@@ -21,9 +21,13 @@ export function remove(commentId, token) {
 }
 
 function returnEmptyCollection(error) {
-  if (/not found|404|resource/i.test(error.message)) {
+  if (error.status === 404) {
     return [];
   }
 
   throw error;
+}
+
+function sortOldestFirst(comments) {
+  return [...comments].sort((a, b) => (a?._createdOn || 0) - (b?._createdOn || 0));
 }

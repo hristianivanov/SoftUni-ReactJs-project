@@ -42,6 +42,13 @@
     font-weight: 700;
     line-height: normal;
     text-transform: capitalize;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.active {
+    color: var(--blue, #6246ea);
 }
 
 @media screen and (max-width:1280px) {

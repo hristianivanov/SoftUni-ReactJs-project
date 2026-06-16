@@ -4,14 +4,16 @@ import { createQuery } from './query';
 const endpoint = '/data/articles';
 
 export function getAll() {
-  return requester('GET', `${endpoint}${createQuery({ sortBy: '_createdOn desc' })}`)
+  return requester('GET', endpoint)
     .then((articles) => articles || [])
+    .then(sortNewestFirst)
     .catch(returnEmptyCollection);
 }
 
 export function getLatest(limit = 4) {
-  return requester('GET', `${endpoint}${createQuery({ sortBy: '_createdOn desc', pageSize: limit })}`)
+  return getAll()
     .then((articles) => articles || [])
+    .then((articles) => articles.slice(0, limit))
     .catch(returnEmptyCollection);
 }
 
@@ -22,9 +24,9 @@ export function getById(articleId) {
 export function getByCategory(category) {
   return requester('GET', `${endpoint}${createQuery({
     where: `category="${category}"`,
-    sortBy: '_createdOn desc',
   })}`)
     .then((articles) => articles || [])
+    .then(sortNewestFirst)
     .catch(returnEmptyCollection);
 }
 
@@ -60,9 +62,13 @@ export function remove(articleId, token) {
 }
 
 function returnEmptyCollection(error) {
-  if (/not found|404|resource/i.test(error.message)) {
+  if (error.status === 404) {
     return [];
   }
 
   throw error;
+}
+
+function sortNewestFirst(articles) {
+  return [...articles].sort((a, b) => (b?._createdOn || 0) - (a?._createdOn || 0));
 }

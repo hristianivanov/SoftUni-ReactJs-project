@@ -43,10 +43,15 @@
     align-items: center;
     gap: 30px;
     list-style: none;
+    flex-wrap: wrap;
 }
 
 .socialLinks .link {
-    display: block;
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    color: var(--blue, #6246ea);
+    font-weight: 800;
 }
 
 .navSection .navTitle {
@@ -65,6 +70,17 @@
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+}
+
+.footerButton {
+    min-height: 44px;
+    border: 0;
+    background: transparent;
+    color: var(--black, #2B2C34);
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 400;
+    text-align: left;
 }
 
 .bottomContainer {

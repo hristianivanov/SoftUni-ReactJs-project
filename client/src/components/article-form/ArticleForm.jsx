@@ -88,6 +88,9 @@ export default function ArticleForm({
           onChange={handleChange}
           aria-invalid={Boolean(errors.title)}
           aria-describedby={errors.title ? 'title-error' : undefined}
+          required
+          aria-required="true"
+          placeholder="A clear developer-focused title"
         />
       </FormField>
 
@@ -100,8 +103,12 @@ export default function ArticleForm({
           value={values.summary}
           onChange={handleChange}
           aria-invalid={Boolean(errors.summary)}
-          aria-describedby={errors.summary ? 'summary-error' : undefined}
+          aria-describedby={errors.summary ? 'summary-error summary-counter' : 'summary-counter'}
+          required
+          aria-required="true"
+          placeholder="Briefly explain what readers will learn"
         />
+        <span id="summary-counter" className={styles.counter}>{values.summary.length} characters</span>
       </FormField>
 
       <FormField id="content" label="Content" error={errors.content}>
@@ -113,8 +120,12 @@ export default function ArticleForm({
           value={values.content}
           onChange={handleChange}
           aria-invalid={Boolean(errors.content)}
-          aria-describedby={errors.content ? 'content-error' : undefined}
+          aria-describedby={errors.content ? 'content-error content-counter' : 'content-counter'}
+          required
+          aria-required="true"
+          placeholder="Write the article content"
         />
+        <span id="content-counter" className={styles.counter}>{values.content.length} characters</span>
       </FormField>
 
       <div className={styles.grid}>
@@ -126,9 +137,12 @@ export default function ArticleForm({
             type="url"
             value={values.imageUrl}
             onChange={handleChange}
-            aria-invalid={Boolean(errors.imageUrl)}
-            aria-describedby={errors.imageUrl ? 'imageUrl-error' : undefined}
-          />
+          aria-invalid={Boolean(errors.imageUrl)}
+          aria-describedby={errors.imageUrl ? 'imageUrl-error' : undefined}
+          required
+          aria-required="true"
+          placeholder="https://example.com/article-image.jpg"
+        />
         </FormField>
 
         <FormField id="category" label="Category" error={errors.category}>
@@ -139,9 +153,12 @@ export default function ArticleForm({
             type="text"
             value={values.category}
             onChange={handleChange}
-            aria-invalid={Boolean(errors.category)}
-            aria-describedby={errors.category ? 'category-error' : undefined}
-          />
+          aria-invalid={Boolean(errors.category)}
+          aria-describedby={errors.category ? 'category-error' : undefined}
+          required
+          aria-required="true"
+          placeholder="React"
+        />
         </FormField>
 
         <FormField id="readingTime" label="Reading time" error={errors.readingTime}>
@@ -155,9 +172,11 @@ export default function ArticleForm({
             step="1"
             value={values.readingTime}
             onChange={handleChange}
-            aria-invalid={Boolean(errors.readingTime)}
-            aria-describedby={errors.readingTime ? 'readingTime-error' : undefined}
-          />
+          aria-invalid={Boolean(errors.readingTime)}
+          aria-describedby={errors.readingTime ? 'readingTime-error' : undefined}
+          required
+          aria-required="true"
+        />
         </FormField>
 
         <label className={styles.checkbox}>

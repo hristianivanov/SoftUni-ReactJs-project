@@ -18,6 +18,7 @@
     line-height: normal;
     text-transform: capitalize;
     cursor: pointer;
+    min-height: 44px;
 }
 
 .link:disabled {
@@ -73,6 +74,9 @@
 
 .cta {
     color: var(--black, #2b2c34);
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
 }
 
 .ctaButton {
@@ -101,6 +105,11 @@
 @media screen and (max-width: 1024px) {}
 
 @media screen and (max-width: 768px) {
+    .container {
+        min-width: 0;
+        flex: 0 0 auto;
+    }
+
     .burger {
         display: flex;
     }

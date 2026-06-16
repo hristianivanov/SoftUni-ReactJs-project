@@ -4,9 +4,11 @@ import * as articleService from '../../api/articleService';
 import useAuth from '../../auth/useAuth';
 import { ErrorState, LoadingState } from '../../components/app-state/AppState.jsx';
 import ArticleForm from '../../components/article-form/ArticleForm.jsx';
+import usePageTitle from '../../hooks/usePageTitle';
 import styles from './articleEditor.module.css';
 
 export default function EditArticle() {
+  usePageTitle('Edit article');
   const { articleId } = useParams();
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -37,7 +39,7 @@ export default function EditArticle() {
         }
       } catch (error) {
         if (!ignore) {
-          if (/not found|404/i.test(error.message)) {
+          if (error.status === 404) {
             setNotFound(true);
           } else {
             setLoadError(error.message);
@@ -95,7 +97,7 @@ export default function EditArticle() {
 
   if (loading) {
     return (
-      <main className={`${styles.container} wrapper`}>
+      <main id="main-content" className={`${styles.container} wrapper`}>
         <LoadingState message="Loading article editor..." />
       </main>
     );
@@ -103,7 +105,7 @@ export default function EditArticle() {
 
   if (notFound) {
     return (
-      <main className={`${styles.container} wrapper`}>
+      <main id="main-content" className={`${styles.container} wrapper`}>
         <ErrorState
           title="Article not found"
           message="This article is missing or was removed."
@@ -116,7 +118,7 @@ export default function EditArticle() {
 
   if (loadError) {
     return (
-      <main className={`${styles.container} wrapper`}>
+      <main id="main-content" className={`${styles.container} wrapper`}>
         <ErrorState title="Could not load article" message={loadError} />
       </main>
     );
@@ -124,7 +126,7 @@ export default function EditArticle() {
 
   if (article._ownerId !== user?._id) {
     return (
-      <main className={styles.container}>
+      <main id="main-content" className={styles.container}>
         <section className={`${styles.panel} wrapper`}>
           <p className={styles.eyebrow}>Owner only</p>
           <h1 className="heading-1">You cannot edit this article</h1>
@@ -138,7 +140,7 @@ export default function EditArticle() {
   }
 
   return (
-    <main className={styles.container}>
+    <main id="main-content" className={styles.container}>
       <section className={`${styles.panel} wrapper`}>
         <p className={styles.eyebrow}>Author workspace</p>
         <h1 className="heading-1">Edit Article</h1>

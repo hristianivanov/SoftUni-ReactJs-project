@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import useAuth from '../../auth/useAuth';
+import usePageTitle from '../../hooks/usePageTitle';
 import styles from '../auth/authForm.module.css';
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default function Login() {
+  usePageTitle('Login');
   const { login, authError, clearAuthError, isSubmitting } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -65,7 +67,7 @@ export default function Login() {
   }
 
   return (
-    <main className={styles.container}>
+    <main id="main-content" className={styles.container}>
       <section className={styles.panel}>
         <p className={styles.brand}>Hristian .Blog</p>
         <h1 className={styles.title}>Sign in to your account</h1>
