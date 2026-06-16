@@ -1,0 +1,109 @@
+.container {
+    flex: 1;
+    background: var(--light-grey-1, #eff0f3);
+}
+
+.hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);
+    gap: 48px;
+    align-items: end;
+    padding-top: 88px;
+    padding-bottom: 48px;
+}
+
+.eyebrow {
+    margin-bottom: 12px;
+    color: var(--blue, #6246ea);
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.search {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-weight: 700;
+}
+
+.search input {
+    width: 100%;
+    padding: 18px 20px;
+    border-radius: 8px;
+    background: var(--white, #fffffe);
+}
+
+.filters {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 20px;
+    padding-bottom: 56px;
+}
+
+.filterButton {
+    min-height: 220px;
+    border: 0;
+    border-radius: 8px;
+    background: var(--black, #2b2c34);
+    color: var(--white, #fffffe);
+    font-size: 24px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.active {
+    background: var(--blue, #6246ea);
+}
+
+.results {
+    padding-bottom: 96px;
+}
+
+.resultSummary {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.resultSummary h2 {
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.resultSummary button {
+    border: 0;
+    border-radius: 8px;
+    background: var(--white, #fffffe);
+    padding: 12px 16px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 24px;
+}
+
+@media screen and (max-width:768px) {
+    .hero {
+        grid-template-columns: 1fr;
+    }
+
+    .hero h1 {
+        font-size: 48px;
+    }
+}
+
+@media screen and (max-width:475px) {
+    .hero h1 {
+        font-size: 40px;
+    }
+
+    .resultSummary {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

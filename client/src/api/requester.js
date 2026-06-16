@@ -1,20 +1,44 @@
-export default async function requester(method, url, data) {
-    const options = {};
+const DEFAULT_API_BASE_URL = 'http://localhost:3030';
 
-    if (method !== 'GET') {
-        options.method = method;
-    }
+const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL || DEFAULT_API_BASE_URL).replace(/\/$/, '');
 
-    if(data){
-        options.header = {
-            'Content-Type': 'application/json',
-        };
+export function getApiBaseUrl() {
+  return apiBaseUrl;
+}
 
-        options.body = JSON.stringify(data);
+export default async function requester(method, endpoint, data, token) {
+  const options = {
+    method,
+    headers: {},
+  };
 
-        const response = await fetch(url,options);
-        const result = response.json();
+  if (data !== undefined) {
+    options.headers['Content-Type'] = 'application/json';
+    options.body = JSON.stringify(data);
+  }
 
-        return result;
-    }
+  if (token) {
+    options.headers['X-Authorization'] = token;
+  }
+
+  const response = await fetch(`${apiBaseUrl}${endpoint}`, options);
+
+  if (response.status === 204) {
+    return undefined;
+  }
+
+  const contentType = response.headers.get('content-type') || '';
+  const result = contentType.includes('application/json')
+    ? await response.json()
+    : await response.text();
+
+  if (!response.ok) {
+    const message = typeof result === 'object' && result !== null
+      ? result.message || 'Request failed'
+      : result || 'Request failed';
+
+    throw new Error(message);
+  }
+
+  return result;
 }

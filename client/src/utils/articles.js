@@ -1,0 +1,48 @@
+export const fallbackImage = '/img/book.png';
+export const fallbackAvatar = '/img/author.jpg';
+
+export function normalizeArticleId(article) {
+  return article?._id || article?.id;
+}
+
+export function formatArticleDate(value) {
+  if (!value) {
+    return 'Draft date';
+  }
+
+  const date = new Date(value);
+
+  if (Number.isNaN(date.getTime())) {
+    return 'Draft date';
+  }
+
+  return new Intl.DateTimeFormat('en', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  }).format(date);
+}
+
+export function getCategoryCounts(articles) {
+  return articles.reduce((counts, article) => {
+    const category = article.category || 'General';
+    counts[category] = (counts[category] || 0) + 1;
+    return counts;
+  }, {});
+}
+
+export function filterArticles(articles, { searchTerm, category }) {
+  const normalizedSearch = searchTerm.trim().toLowerCase();
+
+  return articles.filter((article) => {
+    const matchesCategory = !category || article.category === category;
+    const searchable = [
+      article.title,
+      article.summary,
+      article.authorName,
+      article.category,
+    ].join(' ').toLowerCase();
+
+    return matchesCategory && (!normalizedSearch || searchable.includes(normalizedSearch));
+  });
+}

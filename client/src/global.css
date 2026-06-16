@@ -139,5 +139,10 @@ img {
 @media screen and (max-width:640px) {
     .wrapper {
         max-width: 475px;
+        padding: 0 24px;
+    }
+
+    .heading-1 {
+        font-size: 44px;
     }
 }

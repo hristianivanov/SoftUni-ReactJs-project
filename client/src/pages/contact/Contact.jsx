@@ -1,7 +1,4 @@
-'use client'
-
 import { useState } from 'react'
-import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { Field, Label, Switch } from '@headlessui/react'
 
 export default function Contact() {
@@ -27,7 +24,7 @@ export default function Contact() {
                     Aute magna irure deserunt veniam aliqua magna enim voluptate.
                 </p>
             </div>
-            <form action="#" method="POST" className="mx-auto mt-16 max-w-xl sm:mt-20">
+            <form onSubmit={(event) => event.preventDefault()} className="mx-auto mt-16 max-w-xl sm:mt-20">
                 <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
                     <div>
                         <label htmlFor="first-name" className="block text-sm font-semibold leading-6 text-gray-900">
@@ -101,10 +98,7 @@ export default function Contact() {
                             </Switch>
                         </div>
                         <Label className="text-sm leading-6 text-gray-600">
-                            By selecting this, you agree to our{' '}
-                            <a href="#" className="font-semibold text-indigo-600">
-                                privacy&nbsp;policy
-                            </a>
+                            By selecting this, you agree to the local demo privacy policy
                             .
                         </Label>
                     </Field>
@@ -114,7 +108,7 @@ export default function Contact() {
                         type="submit"
                         className="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                     >
-                        Let's talk
+                        Let&apos;s talk
                     </button>
                 </div>
             </form>
