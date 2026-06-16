@@ -9,6 +9,13 @@ const publicLinks = [
   { to: '/contact', label: 'Contact' },
 ];
 
+const authenticatedLinks = [
+  { to: '/', label: 'Home' },
+  { to: '/articles', label: 'Articles' },
+  { to: '/articles/create', label: 'Write article' },
+  { to: '/contact', label: 'Contact' },
+];
+
 export default function AuthLinks() {
   const { user, isAuthenticated, logout, isSubmitting } = useAuth();
   const navigate = useNavigate();
@@ -55,7 +62,7 @@ export default function AuthLinks() {
       </button>
       {open && (
         <nav id="mobile-navigation" className={styles.responsiveMenu} aria-label="Mobile navigation">
-          {publicLinks.map((link) => (
+          {(isAuthenticated ? authenticatedLinks : publicLinks).map((link) => (
             <NavLink
               key={link.to}
               className={styles.cta}

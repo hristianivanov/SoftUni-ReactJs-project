@@ -11,10 +11,98 @@
     gap: 40px;
 }
 
+.topBar {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    align-items: center;
+}
+
 .backLink {
     width: max-content;
     color: var(--blue, #6246ea);
     font-weight: 800;
+}
+
+.ownerActions,
+.confirmActions,
+.commentActions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+}
+
+.ownerLink,
+.dangerButton,
+.confirmActions button,
+.commentForm button,
+.guestCommentPrompt a,
+.commentActions button {
+    border: 0;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.ownerLink,
+.commentForm button,
+.guestCommentPrompt a,
+.confirmActions button:first-child {
+    background: var(--blue, #6246ea);
+    color: var(--white, #fffffe);
+}
+
+.dangerButton,
+.commentActions button:first-of-type {
+    background: #b42318;
+    color: var(--white, #fffffe);
+}
+
+.confirmActions button:last-child,
+.commentActions button:last-child {
+    background: var(--light-grey-1, #eff0f3);
+    color: var(--black, #2b2c34);
+}
+
+.dangerButton:disabled,
+.confirmActions button:disabled,
+.commentForm button:disabled,
+.commentActions button:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.confirmBox,
+.guestCommentPrompt,
+.commentForm {
+    padding: 24px;
+    border-radius: 8px;
+    background: var(--light-grey-1, #eff0f3);
+}
+
+.confirmBox h2 {
+    margin-bottom: 10px;
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.confirmBox p {
+    margin-bottom: 18px;
+}
+
+.actionError,
+.fieldError {
+    color: #b42318;
+    font-weight: 800;
+}
+
+.actionError {
+    padding: 14px 16px;
+    border: 1px solid rgba(180, 35, 24, 0.28);
+    border-radius: 8px;
+    background: rgba(180, 35, 24, 0.08);
 }
 
 .header {
@@ -93,6 +181,45 @@
     margin-bottom: 28px;
 }
 
+.commentForm {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 28px;
+}
+
+.commentForm label {
+    font-weight: 800;
+}
+
+.commentForm textarea {
+    width: 100%;
+    padding: 15px 16px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background: var(--white, #fffffe);
+    resize: vertical;
+}
+
+.commentForm textarea:focus {
+    border-color: var(--blue, #6246ea);
+    box-shadow: 0 0 0 3px rgba(98, 70, 234, 0.18);
+    outline: none;
+}
+
+.commentForm button {
+    align-self: flex-start;
+}
+
+.guestCommentPrompt {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 18px;
+    align-items: center;
+    margin-bottom: 28px;
+}
+
 .commentList {
     display: grid;
     gap: 20px;
@@ -118,7 +245,20 @@
     color: var(--dark-grey, #9a9494);
 }
 
+.comment p {
+    white-space: pre-line;
+}
+
+.commentActions {
+    margin-top: 16px;
+}
+
 @media screen and (max-width:768px) {
+    .topBar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
     .header h1 {
         font-size: 48px;
     }

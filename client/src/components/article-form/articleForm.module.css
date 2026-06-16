@@ -1,0 +1,105 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    align-items: end;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.field label,
+.checkbox {
+    font-weight: 800;
+}
+
+.field input,
+.field textarea {
+    width: 100%;
+    padding: 15px 16px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background: var(--light-grey-1, #eff0f3);
+    resize: vertical;
+}
+
+.field input:focus,
+.field textarea:focus,
+.checkbox input:focus-visible {
+    border-color: var(--blue, #6246ea);
+    box-shadow: 0 0 0 3px rgba(98, 70, 234, 0.18);
+    outline: none;
+}
+
+.checkbox {
+    min-height: 53px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-radius: 8px;
+}
+
+.checkbox input {
+    width: 18px;
+    height: 18px;
+}
+
+.fieldError {
+    color: #b42318;
+    font-weight: 700;
+}
+
+.errorSummary {
+    padding: 14px 16px;
+    border: 1px solid rgba(180, 35, 24, 0.28);
+    border-radius: 8px;
+    background: rgba(180, 35, 24, 0.08);
+    color: #912018;
+    font-weight: 700;
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    align-items: center;
+}
+
+.submit,
+.cancel {
+    border-radius: 8px;
+    padding: 16px 18px;
+    font-weight: 800;
+}
+
+.submit {
+    border: 0;
+    background: var(--blue, #6246ea);
+    color: var(--white, #fffffe);
+    cursor: pointer;
+}
+
+.submit:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.cancel {
+    background: var(--light-grey-1, #eff0f3);
+    color: var(--black, #2b2c34);
+}
+
+@media screen and (max-width:768px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}

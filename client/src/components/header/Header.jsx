@@ -1,9 +1,12 @@
 import { Link } from 'react-router-dom';
+import useAuth from '../../auth/useAuth';
 import AuthLinks from '../auth-links/AuthLinks.jsx';
 import Logo from '../logo/Logo.jsx';
 import styles from './header.module.css';
 
 export default function Header() {
+  const { isAuthenticated } = useAuth();
+
   return (
     <header className={styles.container}>
       <div className={`${styles.wrapper} wrapper`}>
@@ -11,6 +14,7 @@ export default function Header() {
         <nav className={styles.links} aria-label="Main navigation">
           <Link className={styles.link} to="/">Home</Link>
           <Link className={styles.link} to="/articles">Articles</Link>
+          {isAuthenticated && <Link className={styles.link} to="/articles/create">Write article</Link>}
           <Link className={styles.link} to="/contact">Contact</Link>
           <Link className={styles.searchContainer} to="/articles">
             <img className={styles.searchIcon} src="/svg/search.svg" alt="" />

@@ -8,7 +8,7 @@ const demoUser = {
 };
 
 const authorAvatar = '/img/author.jpg';
-const imageUrl = '/img/book.png';
+const imageUrl = 'https://images.unsplash.com/photo-1498050108023-c5249f4df085';
 
 const articles = [
   {
