@@ -7,7 +7,8 @@
     --black: #2b2c34;
     --blue: #6246ea;
     --grey: #c0c0c0;
-    --dark-grey: #9a9494;
+    --text-secondary: #66636f;
+    --text-muted: #76717d;
     --light-grey-1: #eff0f3;
     --light-grey-2: #e4e5e9;
     --content-max: 1180px;
@@ -138,7 +139,7 @@ img {
 
 .paragraph-1 {
     font-size: clamp(1rem, 1.5vw, 1.125rem);
-    color: var(--dark-grey);
+    color: var(--text-secondary);
 }
 
 .paragraph-2 {

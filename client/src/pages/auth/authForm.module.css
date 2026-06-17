@@ -29,7 +29,7 @@
 
 .intro {
     margin-bottom: var(--space-5);
-    color: var(--dark-grey, #9a9494);
+    color: var(--text-secondary, #66636f);
 }
 
 .form {
@@ -94,7 +94,7 @@
 
 .footer {
     margin-top: var(--space-5);
-    color: var(--dark-grey, #9a9494);
+    color: var(--text-secondary, #66636f);
     text-align: center;
 }
 

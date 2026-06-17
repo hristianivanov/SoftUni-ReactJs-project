@@ -88,7 +88,7 @@ const comments = [
 try {
   const user = await authenticateDemoUser();
   const existingArticles = await request('GET', '/data/articles').catch((error) => {
-    if (/not found|404|resource/i.test(error.message)) {
+    if (/not found|404|resource|collection does not exist/i.test(error.message)) {
       return [];
     }
 

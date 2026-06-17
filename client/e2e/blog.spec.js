@@ -23,7 +23,7 @@ test('guest public flow renders and filters content', async ({ page }) => {
 
   const articleLink = page.locator('article a').first();
   await articleLink.click();
-  await expect(page.getByRole('heading', { name: /comments/i })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Comments', exact: true })).toBeVisible();
 
   await page.goto('/articles/create');
   await expect(page).toHaveURL(/\/login$/);
@@ -166,6 +166,11 @@ async function ensureSeedData(api) {
     if (Array.isArray(body) && body.length > 0) {
       return;
     }
+  } else {
+    const message = await articles.text();
+    if (!/collection does not exist|not found|404|resource/i.test(message)) {
+      throw new Error(`Unable to read seed articles: ${message}`);
+    }
   }
 
   let userResponse = await api.post('/users/register', { data: demoUser });
@@ -177,7 +182,7 @@ async function ensureSeedData(api) {
   await api.post('/data/articles', {
     headers: { 'X-Authorization': user.accessToken },
     data: {
-      title: 'Playwright Seed Article',
+      title: 'Routing Public Blog Pages',
       summary: 'Seeded article used by rendered browser tests.',
       content: 'This rendered test article provides enough content for detail pages, comments, and catalog checks.',
       imageUrl: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085',

@@ -100,6 +100,12 @@ cd client
 npm run test:e2e
 ```
 
+Run the same client quality gate used by CI from the repository root:
+
+```powershell
+npm run ci:client
+```
+
 Build the client:
 
 ```powershell
@@ -112,6 +118,8 @@ Seed local API data:
 ```powershell
 npm run seed
 ```
+
+When dependencies change, update and commit the matching `package-lock.json` from the same package directory. Use `npm ci` to reproduce CI installs locally; GitHub Actions runs the client checks on Node 22 with `npm ci --no-audit --no-fund`.
 
 ## Architecture
 

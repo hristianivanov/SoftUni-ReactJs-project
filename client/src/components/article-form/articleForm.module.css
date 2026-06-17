@@ -68,7 +68,7 @@
 }
 
 .counter {
-    color: var(--dark-grey, #9a9494);
+    color: var(--text-muted, #76717d);
     font-size: 14px;
 }
 

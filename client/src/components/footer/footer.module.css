@@ -97,7 +97,7 @@
     content: '';
     width: 100%;
     height: 1px;
-    background: #C0C0C0;;
+    background: var(--grey, #c0c0c0);
     display: block;
     margin-bottom: var(--space-4);
 }

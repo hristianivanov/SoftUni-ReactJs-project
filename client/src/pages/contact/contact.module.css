@@ -41,7 +41,7 @@
 }
 
 .card span {
-    color: var(--dark-grey, #9a9494);
+    color: var(--text-muted, #76717d);
     font-size: 0.875rem;
     font-weight: 800;
 }
