@@ -74,6 +74,11 @@
     font-weight: 800;
 }
 
+.resultSummary p {
+    color: var(--text-muted, #76717d);
+    font-weight: 700;
+}
+
 .resultSummary button {
     border: 0;
     border-radius: var(--radius-sm);
@@ -84,10 +89,65 @@
     cursor: pointer;
 }
 
+.sortControl {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--text-secondary, #66636f);
+    font-weight: 800;
+}
+
+.sortControl select {
+    min-height: 44px;
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: var(--white, #fffffe);
+    padding: 10px 12px;
+    color: var(--black, #2b2c34);
+    font-weight: 800;
+}
+
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: var(--space-5);
+}
+
+.pagination {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-2);
+    margin-top: var(--space-6);
+}
+
+.pageButtons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-2);
+}
+
+.pagination button {
+    min-width: 44px;
+    min-height: 44px;
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: var(--white, #fffffe);
+    padding: 10px 13px;
+    color: var(--black, #2b2c34);
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.pagination button:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+}
+
+.pagination .currentPage {
+    background: var(--blue, #6246ea);
+    color: var(--white, #fffffe);
 }
 
 @media screen and (max-width:768px) {
@@ -100,5 +160,11 @@
     .resultSummary {
         flex-direction: column;
         align-items: flex-start;
+    }
+
+    .sortControl {
+        width: 100%;
+        align-items: stretch;
+        flex-direction: column;
     }
 }

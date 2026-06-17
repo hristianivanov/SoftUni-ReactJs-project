@@ -1,27 +1,94 @@
 # Hristian Blog
 
-Hristian Blog is a React blogging project for the SoftUni ReactJS course. It keeps the original Figma-inspired visual direction, but the app now runs as a real local full-stack demo: public article browsing, authentication, owner-managed articles, and comments all talk to the bundled SoftUni practice server.
+Hristian Blog is a complete local React portfolio demo for writing, browsing, managing, and discussing developer articles against the bundled SoftUni practice server.
+
+[![CI](https://github.com/hristianivanov/SoftUni-ReactJs-project/actions/workflows/ci.yml/badge.svg)](https://github.com/hristianivanov/SoftUni-ReactJs-project/actions/workflows/ci.yml)
+
+![Home page desktop screenshot](docs/screenshots/home-desktop.jpg)
+
+## Engineering Highlights
+
+- Full local CRUD workflow for articles and comments using the SoftUni practice API.
+- Protected author workspace with owner-only article and comment controls.
+- URL-backed catalog search, category filtering, sorting, and pagination.
+- Accessible responsive navigation with a focus-managed hamburger drawer.
+- Defensive loading, error, empty, not-found, and success states.
+- CI-backed lint, unit/component tests, production build, and Playwright browser smoke tests.
 
 ## Features
 
 - Public home page with featured and recent articles.
-- Article catalog with category filtering and client-side search.
-- Article detail pages with defensive loading, empty, error, and not-found states.
-- Registration, login, logout, guest-only auth routes, and persisted sessions.
+- Article catalog with URL-persisted search, category filters, sorting, and 6-item pagination.
+- Article detail pages with related articles, comments, and owner-only article actions.
+- My Articles dashboard for viewing, editing, and deleting owned articles.
+- Registration, login, logout, guest-only auth routes, and persisted local sessions.
 - Protected create/edit article routes.
-- Owner-only article edit/delete controls.
 - Authenticated comment creation and owner-only comment deletion.
+- Lightweight success feedback for article and comment CRUD actions.
+- Responsive desktop navigation and mobile hamburger drawer with backdrop, Escape handling, focus trap, and scroll lock.
 - Accessible confirmation dialogs for destructive actions.
-- Responsive desktop and mobile navigation with skip-link support.
 
-## Tech Stack
+## Screenshot Gallery
+
+![Article catalog desktop screenshot](docs/screenshots/articles-desktop.jpg)
+
+![Article detail desktop screenshot](docs/screenshots/article-detail-desktop.jpg)
+
+![My Articles dashboard desktop screenshot](docs/screenshots/my-articles-desktop.jpg)
+
+![Article editor desktop screenshot](docs/screenshots/article-editor-desktop.jpg)
+
+![Mobile menu screenshot](docs/screenshots/mobile-menu.jpg)
+
+## Architecture
+
+- `client/src/api` contains service modules for auth, articles, comments, query construction, and requester errors.
+- `client/src/auth` owns auth context and local session persistence.
+- `client/src/pages` contains route-level screens for public browsing, auth, article editing, details, and My Articles.
+- `client/src/components` contains shared UI such as forms, navigation, post cards, status messages, app states, and confirmation dialogs.
+- `client/src/utils/articles.js` contains article formatting, filtering, sorting, and pagination helpers.
+- `server/data/blog.json` is source material for the local seed script.
+- `server/server.js` is the generated SoftUni practice server and is intentionally left unchanged.
+
+## Technology Stack
 
 - React 18, Vite, React Router, JavaScript.
 - CSS Modules plus the existing Tailwind base setup.
-- React Context for auth state.
+- React Context for authentication state.
 - Native `fetch` wrapped by `client/src/api/requester.js`.
 - Vitest, Testing Library, and Playwright for quality checks.
+- GitHub Actions for client quality and browser smoke jobs.
 - Local SoftUni practice server from the `server` directory.
+
+## Testing
+
+Current local coverage:
+
+- Unit/component tests: 11 files, 34 tests.
+- Playwright browser workflows: 8 tests.
+- CI jobs: `Client quality` and `Browser smoke`.
+
+Useful commands:
+
+```powershell
+npm ci
+npm run ci:client
+npm --prefix client run test:e2e
+npm run capture:screenshots
+```
+
+Client-only commands:
+
+```powershell
+cd client
+npm ci
+npm run lint
+npm run test:run
+npm run build
+npm run test:e2e
+```
+
+When dependencies change, update and commit the matching `package-lock.json` from the same package directory. Use `npm ci` to reproduce CI installs locally; GitHub Actions runs the client checks on Node 22 with `npm ci --no-audit --no-fund`.
 
 ## Local Setup
 
@@ -46,8 +113,6 @@ npm run dev
 
 The API runs at `http://localhost:3030` and the client runs at `http://localhost:5173`.
 
-## Environment
-
 The client reads the API URL from `VITE_API_BASE_URL`.
 
 ```powershell
@@ -60,79 +125,22 @@ Default local value:
 VITE_API_BASE_URL=http://localhost:3030
 ```
 
-## Development Data
-
-With `npm run dev` running, seed the local server from a second terminal:
+With `npm run dev` running, seed local data from a second terminal:
 
 ```powershell
 npm run seed
 ```
 
-The seed script is idempotent. It creates a demo author only when needed and skips duplicate article creation when articles already exist.
+The seed script is idempotent for an already populated in-memory server.
 
-Local demo credentials:
+## Demo Credentials
 
 - Email: `demo@local.test`
 - Password: `demo123`
 
 These credentials are for the local practice server only.
 
-## Useful Commands
-
-Run client lint:
-
-```powershell
-cd client
-npm run lint
-```
-
-Run unit and component tests:
-
-```powershell
-cd client
-npm run test:run
-```
-
-Run Playwright browser smoke tests:
-
-```powershell
-cd client
-npm run test:e2e
-```
-
-Run the same client quality gate used by CI from the repository root:
-
-```powershell
-npm run ci:client
-```
-
-Build the client:
-
-```powershell
-cd client
-npm run build
-```
-
-Seed local API data:
-
-```powershell
-npm run seed
-```
-
-When dependencies change, update and commit the matching `package-lock.json` from the same package directory. Use `npm ci` to reproduce CI installs locally; GitHub Actions runs the client checks on Node 22 with `npm ci --no-audit --no-fund`.
-
-## Architecture
-
-- `client/src/api` contains API service modules for auth, articles, comments, and requester errors.
-- `client/src/auth` owns auth context and local session persistence.
-- `client/src/pages` contains route-level screens.
-- `client/src/components` contains shared UI such as forms, navigation, post cards, app states, and confirmation dialogs.
-- `server/data/blog.json` is source material for the seed script.
-- `server/server.js` is the generated SoftUni practice server and is intentionally left unchanged.
-
-## API Surface
-
-The app uses these local server endpoints:
+## API Endpoints
 
 - `POST /users/register`
 - `POST /users/login`
@@ -146,40 +154,18 @@ The app uses these local server endpoints:
 - `POST /data/comments`
 - `DELETE /data/comments/:id`
 
-## Authentication And Ownership
-
-Sessions are stored in `localStorage` for this educational local-server project. The stored session contains `_id`, `email`, and `accessToken`; passwords are never stored.
-
-The UI hides edit/delete controls from guests and non-owners, but the server remains the source of truth for authorization. Owner checks are duplicated in the UI only to keep the experience clear.
-
-## Testing
-
-The test suite covers:
-
-- Requester success, structured server errors, and network failures.
-- Auth session storage behavior.
-- Protected and guest-only route guards.
-- Login and registration form validation/server errors.
-- Article form validation.
-- Owner-only article/comment controls in the detail view.
-- Browser smoke flows for public browsing, auth, create/edit/delete article, comments, mobile navigation, and responsive overflow checks.
-
 ## Deployment Status
 
-This repository is not production-deployed yet. A frontend-only deploy would render the static app, but auth, article writes, and comments require a reachable API. See `DEPLOYMENT.md` for the exact blockers and suggested deployment milestone.
+This repository is not production-deployed. A frontend-only deploy would render the static app, but auth, article writes, comments, and owner checks require a reachable API. See `DEPLOYMENT.md` for deployment blockers and suggested next steps.
 
 ## Known Limitations
 
 - No rich-text editor.
 - No image upload or media storage.
-- No likes, bookmarks, profile editing, or password recovery.
-- No admin dashboard.
-- Local practice server data is not a production persistence layer.
+- No likes, bookmarks, profile editing, password recovery, or admin dashboard.
+- Local practice server data is in-memory for each server process and is not a production persistence layer.
+- Authentication is educational and stores the local demo session in `localStorage`.
 
-## Future Improvements
+## Project Status
 
-- Deploy or replace the API with a production-ready backend.
-- Add screenshots after deployment URLs are stable.
-- Add richer article formatting.
-- Add profile pages and saved articles.
-- Add API-level contract tests around ownership and error cases.
+Complete local portfolio demo.

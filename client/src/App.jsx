@@ -6,6 +6,7 @@ import Contact from './pages/contact/Contact.jsx';
 import Detail from './pages/detail/Detail.jsx';
 import Home from './pages/home/Home.jsx';
 import Login from './pages/login/Login.jsx';
+import MyArticles from './pages/my-articles/MyArticles.jsx';
 import NotFound from './pages/not-found/NotFound.jsx';
 import Register from './pages/register/Register.jsx';
 import Footer from './components/footer/Footer.jsx';
@@ -24,6 +25,7 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/articles" element={<Articles />} />
         <Route element={<RequireAuth />}>
+          <Route path="/my-articles" element={<MyArticles />} />
           <Route path="/articles/create" element={<CreateArticle />} />
           <Route path="/articles/:articleId/edit" element={<EditArticle />} />
         </Route>

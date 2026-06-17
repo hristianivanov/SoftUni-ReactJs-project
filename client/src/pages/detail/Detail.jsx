@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import * as articleService from '../../api/articleService';
 import * as commentService from '../../api/commentService';
 import useAuth from '../../auth/useAuth';
 import { EmptyState, ErrorState, LoadingState } from '../../components/app-state/AppState.jsx';
 import ConfirmationDialog from '../../components/confirmation-dialog/ConfirmationDialog.jsx';
+import PostCard from '../../components/post-card/PostCard.jsx';
+import StatusMessage from '../../components/status-message/StatusMessage.jsx';
 import usePageTitle from '../../hooks/usePageTitle';
 import {
   fallbackAvatar,
@@ -23,8 +25,10 @@ import styles from './detailPage.module.css';
 function Detail() {
   const { articleId } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const { user, isAuthenticated } = useAuth();
   const [article, setArticle] = useState(null);
+  const [relatedArticles, setRelatedArticles] = useState([]);
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [commentsLoading, setCommentsLoading] = useState(true);
@@ -41,11 +45,21 @@ function Detail() {
   const [commentDeleteConfirmId, setCommentDeleteConfirmId] = useState('');
   const [deletingCommentId, setDeletingCommentId] = useState('');
   const [commentDeleteError, setCommentDeleteError] = useState('');
+  const [status, setStatus] = useState(() => location.state?.message || '');
   const articleDeleteRef = useRef(false);
   const commentSaveRef = useRef(false);
   const commentDeleteRef = useRef('');
 
   usePageTitle(article?.title || 'Article details');
+
+  useEffect(() => {
+    if (!location.state?.message) {
+      return;
+    }
+
+    setStatus(location.state.message);
+    navigate(`${location.pathname}${location.search}`, { replace: true, state: null });
+  }, [location.pathname, location.search, location.state, navigate]);
 
   useEffect(() => {
     let ignore = false;
@@ -91,6 +105,37 @@ function Detail() {
   useEffect(() => {
     let ignore = false;
 
+    async function loadRelatedArticles() {
+      if (!article?.category) {
+        setRelatedArticles([]);
+        return;
+      }
+
+      try {
+        const result = await articleService.getByCategory(article.category);
+
+        if (!ignore) {
+          setRelatedArticles(result
+            .filter((candidate) => normalizeArticleId(candidate) !== articleId)
+            .slice(0, 3));
+        }
+      } catch {
+        if (!ignore) {
+          setRelatedArticles([]);
+        }
+      }
+    }
+
+    loadRelatedArticles();
+
+    return () => {
+      ignore = true;
+    };
+  }, [article, articleId]);
+
+  useEffect(() => {
+    let ignore = false;
+
     async function loadComments() {
       setCommentsLoading(true);
       setCommentLoadError('');
@@ -130,7 +175,7 @@ function Detail() {
 
     try {
       await articleService.remove(articleId, user.accessToken);
-      navigate('/articles', { replace: true });
+      navigate('/articles', { replace: true, state: { message: 'Article deleted.' } });
     } catch (err) {
       setArticleActionError(err.message);
     } finally {
@@ -173,6 +218,7 @@ function Detail() {
 
       setComments((current) => [...current, createdComment]);
       setCommentText('');
+      setStatus('Comment posted.');
     } catch (err) {
       setCommentServerError(err.message);
     } finally {
@@ -194,6 +240,7 @@ function Detail() {
       await commentService.remove(commentId, user.accessToken);
       setComments((current) => current.filter((comment, index) => getCommentKey(comment, index) !== commentId));
       setCommentDeleteConfirmId('');
+      setStatus('Comment deleted.');
     } catch (err) {
       setCommentDeleteError(err.message);
     } finally {
@@ -262,6 +309,7 @@ function Detail() {
         </div>
 
         {articleActionError && <div className={styles.actionError} role="alert">{articleActionError}</div>}
+        <StatusMessage message={status} onClear={() => setStatus('')} />
 
         <ConfirmationDialog
           isOpen={showDeleteConfirm}
@@ -308,6 +356,20 @@ function Detail() {
           ))}
         </div>
       </article>
+
+      {relatedArticles.length > 0 && (
+        <section className={`${styles.related} wrapper`} aria-labelledby="related-heading">
+          <div className={styles.relatedHeader}>
+            <p className={styles.eyebrow}>Keep reading</p>
+            <h2 id="related-heading" className="sub-heading-1">Related Articles</h2>
+          </div>
+          <div className={styles.relatedGrid}>
+            {relatedArticles.map((relatedArticle) => (
+              <PostCard key={normalizeArticleId(relatedArticle)} article={relatedArticle} />
+            ))}
+          </div>
+        </section>
+      )}
 
       <section className={`${styles.comments} wrapper`} aria-labelledby="comments-heading">
         <h2 id="comments-heading" className="sub-heading-1">Comments</h2>

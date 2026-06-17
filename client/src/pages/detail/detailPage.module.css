@@ -127,6 +127,14 @@
     font-weight: 800;
 }
 
+.eyebrow {
+    margin-bottom: var(--space-2);
+    color: var(--blue, #6246ea);
+    font-size: 0.875rem;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
 .summary {
     max-width: 62ch;
 }
@@ -177,6 +185,20 @@
 
 .comments {
     margin-top: var(--space-7);
+}
+
+.related {
+    margin-top: var(--space-7);
+}
+
+.relatedHeader {
+    margin-bottom: var(--space-5);
+}
+
+.relatedGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--space-5);
 }
 
 .comments h2 {

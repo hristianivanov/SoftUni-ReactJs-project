@@ -1,0 +1,18 @@
+.message {
+    margin: var(--space-4) 0;
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    font-weight: 800;
+}
+
+.success {
+    border: 1px solid rgba(38, 125, 76, 0.28);
+    background: rgba(38, 125, 76, 0.1);
+    color: #20603b;
+}
+
+.error {
+    border: 1px solid rgba(180, 35, 24, 0.28);
+    background: rgba(180, 35, 24, 0.08);
+    color: #912018;
+}

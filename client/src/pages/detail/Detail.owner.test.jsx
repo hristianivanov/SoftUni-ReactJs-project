@@ -6,6 +6,7 @@ import Detail from './Detail.jsx';
 
 vi.mock('../../api/articleService', () => ({
   getById: vi.fn(),
+  getByCategory: vi.fn(),
   remove: vi.fn(),
 }));
 
@@ -21,6 +22,7 @@ describe('article and comment owner visibility', () => {
     const articleService = await import('../../api/articleService');
     const commentService = await import('../../api/commentService');
     articleService.getById.mockResolvedValue(article);
+    articleService.getByCategory.mockResolvedValue([article, relatedArticle]);
     commentService.getByArticleId.mockResolvedValue([ownerComment, otherComment]);
   });
 
@@ -45,6 +47,14 @@ describe('article and comment owner visibility', () => {
 
     await waitFor(() => expect(screen.queryByRole('link', { name: /edit/i })).not.toBeInTheDocument());
     expect(screen.queryByRole('button', { name: /delete/i })).not.toBeInTheDocument();
+  });
+
+  it('shows related articles without repeating the current article', async () => {
+    renderDetail();
+
+    expect(await screen.findByRole('heading', { name: /related articles/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Related Article' })).toBeInTheDocument();
+    expect(screen.getAllByRole('heading', { name: 'Owner Article' })).toHaveLength(1);
   });
 });
 
@@ -72,6 +82,19 @@ const otherComment = {
   _ownerId: 'someone-else',
   text: 'Other comment',
   authorName: 'Other',
+};
+
+const relatedArticle = {
+  _id: 'related-id',
+  _ownerId: 'other-id',
+  title: 'Related Article',
+  summary: 'Related summary',
+  content: 'Related content',
+  imageUrl: 'https://example.com/related.jpg',
+  authorName: 'Other',
+  category: 'React',
+  readingTime: 4,
+  _createdOn: 2,
 };
 
 function renderDetail() {

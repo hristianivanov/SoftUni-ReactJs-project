@@ -87,7 +87,10 @@ export default function EditArticle() {
 
     try {
       const updatedArticle = await articleService.update(articleId, payload, user.accessToken);
-      navigate(`/articles/${updatedArticle._id || articleId}`, { replace: true });
+      navigate(`/articles/${updatedArticle._id || articleId}`, {
+        replace: true,
+        state: { message: 'Article updated.' },
+      });
     } catch (error) {
       setServerError(error.message);
     } finally {

@@ -24,7 +24,10 @@ export default function CreateArticle() {
 
     try {
       const createdArticle = await articleService.create(payload, user.accessToken);
-      navigate(`/articles/${createdArticle._id}`, { replace: true });
+      navigate(`/articles/${createdArticle._id}`, {
+        replace: true,
+        state: { message: 'Article created.' },
+      });
     } catch (error) {
       setServerError(error.message);
     } finally {

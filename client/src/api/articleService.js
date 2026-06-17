@@ -1,5 +1,6 @@
 import requester from './requester';
 import { createQuery } from './query';
+import { sortNewestFirst } from '../utils/articles';
 
 const endpoint = '/data/articles';
 
@@ -24,6 +25,15 @@ export function getById(articleId) {
 export function getByCategory(category) {
   return requester('GET', `${endpoint}${createQuery({
     where: `category="${category}"`,
+  })}`)
+    .then((articles) => articles || [])
+    .then(sortNewestFirst)
+    .catch(returnEmptyCollection);
+}
+
+export function getByOwner(ownerId) {
+  return requester('GET', `${endpoint}${createQuery({
+    where: `_ownerId="${ownerId}"`,
   })}`)
     .then((articles) => articles || [])
     .then(sortNewestFirst)
@@ -67,8 +77,4 @@ function returnEmptyCollection(error) {
   }
 
   throw error;
-}
-
-function sortNewestFirst(articles) {
-  return [...articles].sort((a, b) => (b?._createdOn || 0) - (a?._createdOn || 0));
 }

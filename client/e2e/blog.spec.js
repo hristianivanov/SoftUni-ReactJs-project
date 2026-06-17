@@ -44,10 +44,10 @@ test('authentication flow persists session and logs out', async ({ page }) => {
   await page.getByLabel(/^password$/i).fill('demo123');
   await page.getByLabel(/confirm password/i).fill('demo123');
   await page.getByRole('button', { name: /create account/i }).click();
-  await expect(page.getByText(email)).toBeVisible();
+  await expect(page.locator(`span[title="${email}"]`).first()).toBeVisible();
 
   await page.reload();
-  await expect(page.getByText(email)).toBeVisible();
+  await expect(page.locator(`span[title="${email}"]`).first()).toBeVisible();
 
   await page.getByRole('banner').getByRole('button', { name: /logout/i }).click();
   await expect(page.getByRole('banner').getByRole('link', { name: /login/i })).toBeVisible();
@@ -56,7 +56,7 @@ test('authentication flow persists session and logs out', async ({ page }) => {
   await page.getByLabel(/email/i).fill(demoUser.email);
   await page.getByLabel(/password/i).fill(demoUser.password);
   await page.getByRole('button', { name: /sign in/i }).click();
-  await expect(page.getByText(demoUser.email)).toBeVisible();
+  await expect(page.locator(`span[title="${demoUser.email}"]`).first()).toBeVisible();
 });
 
 test('article and comment owner flow works', async ({ page }) => {
@@ -93,6 +93,91 @@ test('article and comment owner flow works', async ({ page }) => {
   await page.getByRole('button', { name: /^delete$/i }).click();
   await page.getByRole('button', { name: /delete article/i }).click();
   await expect(page).toHaveURL(/\/articles$/);
+  await expect(page.getByRole('status')).toHaveText(/article deleted/i);
+});
+
+test('my articles dashboard manages owned articles', async ({ page }) => {
+  const title = `My Articles E2E ${Date.now()}`;
+
+  await login(page, demoUser.email, demoUser.password);
+  await page.goto('/my-articles');
+  await expect(page.getByRole('heading', { name: /my articles/i })).toBeVisible();
+  await expect(page.getByText(/owned articles/i)).toBeVisible();
+  await expect(page.getByRole('heading', { name: /routing public blog pages/i }).first()).toBeVisible();
+
+  await page.getByRole('link', { name: /^view$/i }).first().click();
+  await expect(page.getByRole('heading', { name: 'Comments', exact: true })).toBeVisible();
+  await page.goto('/my-articles');
+
+  await page.getByRole('link', { name: /write article/i }).first().click();
+  await fillArticleForm(page, title, 'My Articles dashboard verification.');
+  await page.getByRole('button', { name: /create article/i }).click();
+  await expect(page.getByRole('heading', { name: title })).toBeVisible();
+  await page.goto('/my-articles');
+  await expect(page.getByRole('heading', { name: title })).toBeVisible();
+
+  await page.locator('article', { hasText: title }).getByRole('button', { name: /delete/i }).click();
+  await page.getByRole('button', { name: /delete article/i }).click();
+  await expect(page.getByRole('status')).toHaveText(/article deleted/i);
+  await expect(page.getByRole('heading', { name: title })).not.toBeVisible();
+});
+
+test('catalog URL state survives refresh', async ({ page }) => {
+  await page.goto('/articles');
+  await page.getByRole('searchbox', { name: /search articles/i }).fill('React');
+  await expect(page).toHaveURL(/search=React/i);
+
+  await page.getByRole('button').filter({ hasText: 'React' }).first().click();
+  await expect(page).toHaveURL(/category=React/);
+
+  await page.getByLabel(/sort/i).selectOption('oldest');
+  await expect(page).toHaveURL(/sort=oldest/);
+
+  await page.goto('/articles?sort=oldest');
+  await page.getByRole('button', { name: /next/i }).click();
+  await expect(page).toHaveURL(/page=2/);
+
+  const url = page.url();
+  await page.reload();
+  await expect(page).toHaveURL(url);
+  await expect(page.getByText(/page 2 of/i)).toBeVisible();
+});
+
+test('mobile drawer navigation is accessible for authenticated users', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await login(page, demoUser.email, demoUser.password);
+  await page.goto('/');
+
+  const toggle = page.getByRole('button', { name: /toggle navigation menu/i });
+  await expect(toggle).toBeVisible();
+  await toggle.click();
+  await expect(toggle).toHaveAttribute('aria-expanded', 'true');
+  await expect(page.getByRole('button', { name: /close navigation menu/i })).toBeVisible();
+
+  const drawer = page.getByRole('navigation', { name: /mobile navigation/i });
+  await expect(drawer).toBeVisible();
+  await expect(drawer.getByRole('link', { name: /my articles/i })).toBeVisible();
+  await expect(drawer.getByRole('link', { name: /write article/i })).toBeVisible();
+  await expect(drawer.locator('a').first()).toBeFocused();
+
+  await page.keyboard.press('Escape');
+  await expect(drawer).not.toBeVisible();
+
+  await toggle.click();
+  await drawer.getByRole('link', { name: /my articles/i }).click();
+  await expect(page).toHaveURL(/\/my-articles$/);
+  await expect(drawer).not.toBeVisible();
+  await assertNoHorizontalOverflow(page);
+});
+
+test('related articles appear without repeating the current article', async ({ page }) => {
+  await page.goto('/articles?category=React');
+  const title = await page.locator('article h3').first().textContent();
+  await page.locator('article a').first().click();
+
+  const related = page.getByRole('region', { name: /related articles/i });
+  await expect(related).toBeVisible();
+  await expect(related.getByRole('heading', { name: title.trim() })).toHaveCount(0);
 });
 
 test('responsive and accessibility smoke checks', async ({ page }) => {
@@ -163,7 +248,7 @@ async function ensureSeedData(api) {
 
   if (articles.ok()) {
     const body = await articles.json();
-    if (Array.isArray(body) && body.length > 0) {
+    if (Array.isArray(body) && body.length >= seedArticles.length) {
       return;
     }
   } else {
@@ -179,18 +264,128 @@ async function ensureSeedData(api) {
   }
   const user = await userResponse.json();
 
-  await api.post('/data/articles', {
-    headers: { 'X-Authorization': user.accessToken },
-    data: {
-      title: 'Routing Public Blog Pages',
-      summary: 'Seeded article used by rendered browser tests.',
-      content: 'This rendered test article provides enough content for detail pages, comments, and catalog checks.',
-      imageUrl: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085',
-      category: 'React',
-      readingTime: 4,
-      featured: true,
-      authorName: 'demo',
-      authorAvatar: '/img/author.jpg',
-    },
-  });
+  const createdArticles = [];
+
+  for (const article of seedArticles) {
+    const created = await api.post('/data/articles', {
+      headers: { 'X-Authorization': user.accessToken },
+      data: article,
+    });
+    createdArticles.push(await created.json());
+  }
+
+  for (const article of createdArticles.slice(0, 3)) {
+    await api.post('/data/comments', {
+      headers: { 'X-Authorization': user.accessToken },
+      data: {
+        articleId: article._id,
+        text: `Seed comment for ${article.title}`,
+        authorName: 'demo',
+        authorAvatar: '/img/author.jpg',
+      },
+    });
+  }
 }
+
+async function assertNoHorizontalOverflow(page) {
+  const overflow = await page.evaluate(() => ({
+    hasOverflow: document.documentElement.scrollWidth > window.innerWidth,
+    scrollWidth: document.documentElement.scrollWidth,
+    innerWidth: window.innerWidth,
+  }));
+
+  if (overflow.hasOverflow) {
+    throw new Error(`horizontal overflow: ${JSON.stringify(overflow)}`);
+  }
+}
+
+const seedArticles = [
+  {
+    title: 'Routing Public Blog Pages',
+    summary: 'Seeded article used by rendered browser tests.',
+    content: 'This rendered test article provides enough content for detail pages, comments, and catalog checks.',
+    imageUrl: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085',
+    category: 'React',
+    readingTime: 4,
+    featured: true,
+    authorName: 'demo',
+    authorAvatar: '/img/author.jpg',
+  },
+  {
+    title: 'React State Patterns',
+    summary: 'Patterns for URL-backed state and local UI feedback.',
+    content: 'React state becomes easier to reason about when durable state lives in URLs and transient status stays local.',
+    imageUrl: 'https://images.unsplash.com/photo-1515879218367-8466d910aaa4',
+    category: 'React',
+    readingTime: 5,
+    featured: true,
+    authorName: 'demo',
+    authorAvatar: '/img/author.jpg',
+  },
+  {
+    title: 'Accessible Mobile Navigation',
+    summary: 'A practical look at focus, Escape handling, and responsive drawers.',
+    content: 'Mobile navigation should use real buttons, clear landmarks, focus management, and predictable closing behavior.',
+    imageUrl: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085',
+    category: 'UX',
+    readingTime: 6,
+    featured: false,
+    authorName: 'demo',
+    authorAvatar: '/img/author.jpg',
+  },
+  {
+    title: 'REST Services and AJAX',
+    summary: 'How clients talk to local practice APIs with fetch.',
+    content: 'A small requester module can keep components focused on rendering and leave transport concerns in one place.',
+    imageUrl: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3',
+    category: 'API',
+    readingTime: 6,
+    featured: false,
+    authorName: 'demo',
+    authorAvatar: '/img/author.jpg',
+  },
+  {
+    title: 'Search and Category Filters',
+    summary: 'Client-side search and category filters for article catalogs.',
+    content: 'Search and filters help readers narrow a catalog without requiring backend complexity in a local demo.',
+    imageUrl: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643',
+    category: 'UX',
+    readingTime: 4,
+    featured: false,
+    authorName: 'demo',
+    authorAvatar: '/img/author.jpg',
+  },
+  {
+    title: 'Article Ownership Rules',
+    summary: 'How owner-only controls keep CRUD interfaces clear.',
+    content: 'The client can hide controls for non-owners while the server remains the source of truth for authorization.',
+    imageUrl: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c',
+    category: 'React',
+    readingTime: 5,
+    featured: false,
+    authorName: 'demo',
+    authorAvatar: '/img/author.jpg',
+  },
+  {
+    title: 'Pagination That Stays Shareable',
+    summary: 'Keeping catalog pages in sync with query parameters.',
+    content: 'Pagination belongs in the URL when readers need to refresh or share filtered catalog views.',
+    imageUrl: 'https://images.unsplash.com/photo-1483058712412-4245e9b90334',
+    category: 'JavaScript',
+    readingTime: 3,
+    featured: false,
+    authorName: 'demo',
+    authorAvatar: '/img/author.jpg',
+  },
+  {
+    title: 'Designing Useful Empty States',
+    summary: 'Loading, error, and empty states make demos feel complete.',
+    content: 'Clear state design helps users understand whether data is loading, missing, filtered, or unavailable.',
+    imageUrl: 'https://images.unsplash.com/photo-1497366754035-f200968a6e72',
+    category: 'UX',
+    readingTime: 3,
+    featured: false,
+    authorName: 'demo',
+    authorAvatar: '/img/author.jpg',
+  },
+];

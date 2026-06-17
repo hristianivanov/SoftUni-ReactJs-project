@@ -79,6 +79,36 @@ export function getCategoryCounts(articles) {
   }, {});
 }
 
+export function sortNewestFirst(articles) {
+  return [...articles].sort((a, b) => (b?._createdOn || 0) - (a?._createdOn || 0));
+}
+
+export function sortArticles(articles, sort = 'newest') {
+  const sorted = [...articles];
+
+  if (sort === 'oldest') {
+    return sorted.sort((a, b) => (a?._createdOn || 0) - (b?._createdOn || 0));
+  }
+
+  if (sort === 'title') {
+    return sorted.sort((a, b) => safeText(a?.title).localeCompare(safeText(b?.title)));
+  }
+
+  return sortNewestFirst(sorted);
+}
+
+export function paginateArticles(articles, page, pageSize) {
+  const totalPages = Math.max(1, Math.ceil(articles.length / pageSize));
+  const currentPage = Math.min(Math.max(page, 1), totalPages);
+  const start = (currentPage - 1) * pageSize;
+
+  return {
+    currentPage,
+    totalPages,
+    visibleArticles: articles.slice(start, start + pageSize),
+  };
+}
+
 export function filterArticles(articles, { searchTerm, category }) {
   const normalizedSearch = searchTerm.trim().toLowerCase();
 
