@@ -1,14 +1,14 @@
 .container {
     display: flex;
     justify-content: space-between;
-    gap: 24px;
-    margin-bottom: 50px;
+    gap: var(--space-5);
+    margin-bottom: var(--space-6);
 }
 
 .sectionName,
 .link {
     display: flex;
-    gap: 12px;
+    gap: var(--space-3);
     align-items: stretch;
 }
 
@@ -17,7 +17,7 @@
 }
 
 .line {
-    width: 35px;
+    width: 28px;
 }
 
 @media screen and (max-width:640px) {

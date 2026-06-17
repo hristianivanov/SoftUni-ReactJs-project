@@ -4,7 +4,7 @@
 
 .categoryContainer {
     background: var(--light-grey-1, #eff0f3);
-    padding: 68px 0;
+    padding: var(--space-7) 0;
     position: relative;
     z-index: 1;
 }
@@ -24,14 +24,14 @@
 
 .articlesContainer {
     background: var(--white, #fffffe);
-    padding: 80px 0;
+    padding: var(--space-8) 0;
 }
 
 .wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 80px;
+    gap: var(--space-7);
 }
 
 .content {
@@ -49,9 +49,10 @@
 
 .button {
     background: var(--blue, #6246ea);
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
     color: var(--white, #fffffe);
-    padding: 20px 23px 19px;
+    min-height: 44px;
+    padding: 10px 16px;
     flex: 0 0;
     max-width: max-content;
     font-weight: 700;

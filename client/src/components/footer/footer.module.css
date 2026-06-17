@@ -1,13 +1,14 @@
 .container {
     background: #ddd;
-    padding-top: 70px;
+    padding-top: var(--space-7);
     flex: 0 0;
     margin-top: auto;
 }
 
 .topContainer {
     display: flex;
-    margin-bottom: 50px;
+    gap: var(--space-7);
+    margin-bottom: var(--space-6);
 }
 
 .siteAbout {
@@ -25,23 +26,23 @@
 }
 
 .container .navigation .navSection .navLinks {
-    margin-top: 25px;
+    margin-top: var(--space-3);
     list-style: none;
     display: flex;
-    gap: 20px;
+    gap: var(--space-2);
     flex-flow: column wrap;
 }
 
 .container .siteAbout {
     display: flex;
     flex-flow: column;
-    gap: 20px;
+    gap: var(--space-4);
 }
 
 .socialLinks {
     display: flex;
     align-items: center;
-    gap: 30px;
+    gap: var(--space-5);
     list-style: none;
     flex-wrap: wrap;
 }
@@ -51,14 +52,15 @@
     min-height: 44px;
     align-items: center;
     color: var(--blue, #6246ea);
-    font-weight: 800;
+    font-size: 0.95rem;
+    font-weight: 700;
 }
 
 .navSection .navTitle {
     color: var(--black, #2B2C34);
-    font-size: 20px;
+    font-size: 0.95rem;
     font-style: normal;
-    font-weight: 700;
+    font-weight: 800;
     line-height: normal;
     text-transform: uppercase;
     margin: 0;
@@ -66,7 +68,7 @@
 
 .navSection .navLinks .link {
     color: var(--black, #2B2C34);
-    font-size: 18px;
+    font-size: 0.95rem;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
@@ -78,7 +80,7 @@
     background: transparent;
     color: var(--black, #2B2C34);
     cursor: pointer;
-    font-size: 18px;
+    font-size: 0.95rem;
     font-weight: 400;
     text-align: left;
 }
@@ -87,7 +89,8 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    padding-bottom: 26px;
+    gap: var(--space-3);
+    padding-bottom: var(--space-5);
 }
 
 .bottomContainer::before {
@@ -96,13 +99,13 @@
     height: 1px;
     background: #C0C0C0;;
     display: block;
-    margin-bottom: 26px;
+    margin-bottom: var(--space-4);
 }
 
 @media screen and (max-width:1280px) {
     .topContainer {
         flex-direction: column;
-        gap: 4rem;
+        gap: var(--space-6);
     }
 
     .topContainer .siteAbout {
@@ -116,7 +119,7 @@
     }
     .navigation .navSection {
         flex-basis: 50%;
-        margin-bottom: 3em;
+        margin-bottom: var(--space-5);
     }
     .navSection .navTitle {
         text-align: center;
@@ -131,7 +134,8 @@
         flex-basis: 100%;
     }
     .bottomContainer {
-        display: none;
+        flex-direction: column;
+        align-items: flex-start;
     }
 }
 

@@ -2,7 +2,7 @@
     display: flex;
     gap: .3em;
     align-items: center;
-    min-width: 190px;
+    min-width: 0;
     justify-content: flex-end;
 }
 
@@ -10,9 +10,9 @@
     border: 0;
     color: #FFFFFE;
     background: var(--blue, #6246ea);
-    border-radius: 8px;
-    padding: .5em .8em;
-    font-size: 18px;
+    border-radius: var(--radius-sm);
+    padding: 0.45rem 0.7rem;
+    font-size: 15px;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
@@ -27,7 +27,7 @@
 }
 
 .userEmail {
-    max-width: 170px;
+    max-width: min(170px, 18vw);
     overflow: hidden;
     color: var(--black, #2b2c34);
     font-weight: 800;
@@ -41,7 +41,7 @@
     height: 42px;
     padding: 11px;
     border: 0;
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
     background: var(--white, #fffffe);
     flex-direction: column;
     justify-content: space-between;
@@ -56,19 +56,19 @@
 
 .responsiveMenu {
     position: absolute;
-    top: 128px;
+    top: 72px;
     left: 0;
     color: inherit;
     background: var(--white, #fffffe);
-    height: calc(100vh - 128px);
+    height: calc(100vh - 72px);
     font-weight: 700;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 32px;
-    font-size: 28px;
+    gap: 22px;
+    font-size: 21px;
     z-index: 10;
 }
 
@@ -98,7 +98,7 @@
 
 @media screen and (max-width: 1280px) {
     .link {
-        font-size: 16px;
+        font-size: 15px;
     }
 }
 

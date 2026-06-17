@@ -10,6 +10,21 @@
     --dark-grey: #9a9494;
     --light-grey-1: #eff0f3;
     --light-grey-2: #e4e5e9;
+    --content-max: 1180px;
+    --reading-max: 720px;
+    --page-gutter: clamp(1rem, 3vw, 2rem);
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.5rem;
+    --space-6: 2rem;
+    --space-7: 3rem;
+    --space-8: 4rem;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --shadow-card: 0 10px 28px rgba(43, 44, 52, 0.08);
+    --shadow-soft: 0 6px 18px rgba(43, 44, 52, 0.06);
 }
 
 * {
@@ -24,7 +39,7 @@
 }
 
 html {
-    font: 16px/1.5 "Plus Jakarta Sans", sans-serif;
+    font: 16px/1.6 "Plus Jakarta Sans", sans-serif;
     color: var(--black, #2b2c34);
 }
 
@@ -75,7 +90,7 @@ img {
     left: 12px;
     z-index: 100;
     transform: translateY(-140%);
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
     background: var(--blue, #6246ea);
     color: var(--white, #fffffe);
     padding: 12px 16px;
@@ -93,39 +108,41 @@ img {
 }
 
 .wrapper {
-    max-width: 1536px;
+    width: min(calc(100% - (2 * var(--page-gutter))), var(--content-max));
     margin: 0 auto;
-    padding: 0 95px;
 }
 
 .button {
     background: var(--blue, #6246ea);
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
     color: #FFFFFE;
 }
 
 .heading-1 {
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    font-weight: bold;
+    font-size: clamp(2.125rem, 4.5vw, 3.25rem);
+    line-height: 1.08;
+    font-weight: 800;
 }
 
 .sub-heading-1 {
-    font-size: 24px;
-    font-weight: bold;
+    font-size: clamp(1.4rem, 2.5vw, 2rem);
+    line-height: 1.15;
+    font-weight: 800;
 }
 
 .sub-heading-2 {
-    font-size: 20px;
-    font-weight: bold;
+    font-size: 1.175rem;
+    line-height: 1.2;
+    font-weight: 800;
 }
 
 .paragraph-1 {
-    font-size: 20px;
+    font-size: clamp(1rem, 1.5vw, 1.125rem);
     color: var(--dark-grey);
 }
 
 .paragraph-2 {
-    font-size: 18px;
+    font-size: 1rem;
 }
 
 .paragraph-3 {
@@ -134,50 +151,5 @@ img {
 }
 
 .paragraph-4 {
-    font-size: 14px;
-}
-
-@media screen and (max-width:1536px) {
-    .wrapper {
-        max-width: 1366px;
-    }
-}
-
-@media screen and (max-width:1280px) {
-    .wrapper {
-        max-width: 1024px;
-    }
-}
-
-@media screen and (max-width:1024px) {
-    .wrapper {
-        max-width: 768px;
-        padding: 0 40px;
-    }
-}
-
-
-@media screen and (max-width:768px) {
-    .wrapper {
-        max-width: 640px;
-        padding: 0 24px;
-    }
-}
-
-
-@media screen and (max-width:640px) {
-    .wrapper {
-        max-width: 475px;
-        padding: 0 24px;
-    }
-
-    .heading-1 {
-        font-size: 44px;
-    }
-}
-
-@media screen and (max-width:360px) {
-    .wrapper {
-        padding: 0 20px;
-    }
+    font-size: 0.875rem;
 }

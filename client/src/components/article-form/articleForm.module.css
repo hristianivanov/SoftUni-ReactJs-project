@@ -1,35 +1,44 @@
 .form {
     display: flex;
     flex-direction: column;
-    gap: 22px;
+    gap: var(--space-4);
 }
 
 .grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 18px;
+    gap: var(--space-4);
     align-items: end;
 }
 
 .field {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: var(--space-2);
 }
 
 .field label,
 .checkbox {
-    font-weight: 800;
+    font-weight: 700;
 }
 
 .field input,
 .field textarea {
     width: 100%;
-    padding: 15px 16px;
+    min-height: 46px;
+    padding: 12px 14px;
     border: 1px solid transparent;
-    border-radius: 8px;
-    background: var(--light-grey-1, #eff0f3);
+    border-radius: var(--radius-sm);
+    background: var(--white, #fffffe);
     resize: vertical;
+}
+
+.field textarea {
+    min-height: 104px;
+}
+
+.field textarea[name="content"] {
+    min-height: 220px;
 }
 
 .field input:focus,
@@ -41,11 +50,11 @@
 }
 
 .checkbox {
-    min-height: 53px;
+    min-height: 46px;
     display: flex;
     align-items: center;
     gap: 10px;
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
 }
 
 .checkbox input {
@@ -66,7 +75,7 @@
 .errorSummary {
     padding: 14px 16px;
     border: 1px solid rgba(180, 35, 24, 0.28);
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
     background: rgba(180, 35, 24, 0.08);
     color: #912018;
     font-weight: 700;
@@ -75,14 +84,15 @@
 .actions {
     display: flex;
     flex-wrap: wrap;
-    gap: 14px;
+    gap: var(--space-3);
     align-items: center;
 }
 
 .submit,
 .cancel {
-    border-radius: 8px;
-    padding: 16px 18px;
+    min-height: 46px;
+    border-radius: var(--radius-sm);
+    padding: 11px 16px;
     font-weight: 800;
 }
 

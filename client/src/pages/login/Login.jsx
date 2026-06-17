@@ -71,7 +71,7 @@ export default function Login() {
       <section className={styles.panel}>
         <p className={styles.brand}>Hristian .Blog</p>
         <h1 className={styles.title}>Sign in to your account</h1>
-        <p className={styles.intro}>Continue reading and prepare for authenticated article actions in the next milestone.</p>
+        <p className={styles.intro}>Sign in to create articles, manage your content, and join discussions.</p>
 
         {authError && (
           <div ref={errorRef} tabIndex={-1} className={styles.errorSummary} role="alert">

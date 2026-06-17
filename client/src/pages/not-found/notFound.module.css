@@ -2,8 +2,8 @@
     flex: 1;
     display: flex;
     align-items: center;
-    padding-top: 96px;
-    padding-bottom: 96px;
+    padding-top: var(--space-7);
+    padding-bottom: var(--space-8);
 }
 
 .content {
@@ -13,27 +13,22 @@
 .content p {
     margin-bottom: 12px;
     color: var(--blue, #6246ea);
-    font-weight: 900;
-    font-size: 24px;
+    font-weight: 800;
+    font-size: 1rem;
 }
 
 .content span {
     display: block;
     max-width: 58ch;
-    margin: 24px 0;
+    margin: var(--space-4) 0 var(--space-5);
 }
 
 .content a {
     display: inline-flex;
-    border-radius: 8px;
+    min-height: 44px;
+    border-radius: var(--radius-sm);
     background: var(--blue, #6246ea);
-    padding: 16px 22px;
+    padding: 10px 16px;
     color: var(--white, #fffffe);
     font-weight: 800;
-}
-
-@media screen and (max-width:640px) {
-    .content h1 {
-        font-size: 44px;
-    }
 }

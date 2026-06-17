@@ -1,25 +1,27 @@
 .container {
-    padding-top: 12em;
-    padding-bottom: 16em;
+    padding-top: clamp(3rem, 8vw, 6rem);
+    padding-bottom: clamp(3.5rem, 8vw, 6rem);
     background-size: 35px 35px;
     background-image: radial-gradient(#D2D6DB, 5%, transparent 0);
 }
 
 .wrapper {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
+    gap: var(--space-7);
 }
 
 .textContainer {
     display: flex;
     flex-flow: column;
-    gap: 30px;
+    gap: var(--space-5);
     flex-shrink: 1;
+    max-width: 620px;
 }
 
 .imageContainer {
-    flex-grow: 1;
-    max-width: fit-content;
+    flex: 0 1 440px;
+    max-width: 40%;
 }
 
 .heading {
@@ -28,9 +30,8 @@
 }
 
 .subheading {
-    padding: 4px;
+    padding: 2px 4px;
     max-width: 45ch;
-    height: 50px;
     position: relative;
 }
 
@@ -49,14 +50,16 @@
 .search {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: var(--space-3);
+    max-width: 540px;
 }
 
 .button {
     background: var(--blue, #6246ea);
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
     color: #FFFFFE;
-    padding: 20px 23px 19px 23px;
+    min-height: 48px;
+    padding: 0 18px;
     flex: 0 0;
     max-width: max-content;
     border: 0;
@@ -70,8 +73,9 @@
     flex: 1 1 290px;
     min-width: 0;
     gap: 10px;
-    padding: 21px 200px 21px 25px;
-    border-radius: 8px;
+    min-height: 48px;
+    padding: 14px 16px;
+    border-radius: var(--radius-sm);
     background: var(--white, #FFFFFE);
 }
 
@@ -108,35 +112,25 @@
         flex-basis: unset;
     }
 
-    .textContainer .heading {
-        font-size: 48px;
-    }
-
     .textContainer .subheading {
-        font-size: 18px;
+        font-size: 1rem;
         width: initial;
     }
 
     .textContainer .search .button {
-        padding: 16px 23px 15px 23px;
         max-width: unset;
         text-align: center;
     }
 
     .textContainer .search .input {
         flex: unset;
-        padding: 16px 25px;
     }
 }
 
 @media screen and (max-width:475px) {
     .container {
-        padding-top: 7em;
-        padding-bottom: 9em;
-    }
-
-    .textContainer .heading {
-        font-size: 39px;
+        padding-top: var(--space-7);
+        padding-bottom: var(--space-7);
     }
 }
 

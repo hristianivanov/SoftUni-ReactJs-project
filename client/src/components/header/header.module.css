@@ -1,19 +1,18 @@
 .container {
     background: #EFF0F3;
-    box-shadow: 4px 6px 13px 0 rgba(215, 215, 215, 0.25);
-    padding-top: 22px;
-    padding-bottom: 20px;
+    box-shadow: var(--shadow-soft);
+    padding: 14px 0;
 }
 
 .container .wrapper {
     display: flex;
-    height: 86px;
     align-items: center;
     justify-content: space-between;
+    gap: var(--space-5);
 }
 
 .container .wrapper :first-of-type(a) {
-    flex: 3;
+    flex: 1 1 auto;
 }
 
 .searchContainer {
@@ -30,14 +29,14 @@
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    gap: 50px;
-    margin-right: 50px;
+    gap: 24px;
+    margin-right: 24px;
 }
 
 .link {
     font: inherit;
     color: var(--black, #2B2C34);
-    font-size: 20px;
+    font-size: 16px;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
@@ -52,31 +51,23 @@
 }
 
 @media screen and (max-width:1280px) {
-    .siteName {
-        font-size: 32px;
-    }
-
     .links {
-        gap: 25px;
-        margin-right: 25px;
+        gap: 18px;
+        margin-right: 18px;
     }
 
     .link {
-        font-size: 18px;
+        font-size: 15px;
     }
 }
 
 @media screen and (max-width:1024px) {
     .container .wrapper {
-        padding: 20px;
+        width: min(calc(100% - (2 * var(--page-gutter))), var(--content-max));
     }
 
     .links {
         margin-right: 15px;
-    }
-
-    .link {
-        font-size: 16px;
     }
 
     .searchIcon {
