@@ -3,6 +3,10 @@
     "capture:screenshots": "node scripts/capture-screenshots.mjs",
     "dev": "node scripts/dev.mjs",
     "ci:client": "npm --prefix client ci --no-audit --no-fund && npm --prefix client run lint && npm --prefix client run test:run && npm --prefix client run build",
-    "seed": "node scripts/seed-dev.mjs"
+    "seed": "node scripts/seed-dev.mjs",
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": "22.x"
   }
 }
