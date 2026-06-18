@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import * as articleService from '../../api/articleService';
 import * as commentService from '../../api/commentService';
 import useAuth from '../../auth/useAuth';
+import useInvalidSessionRedirect from '../../auth/useInvalidSessionRedirect';
 import { EmptyState, ErrorState, LoadingState } from '../../components/app-state/AppState.jsx';
 import ConfirmationDialog from '../../components/confirmation-dialog/ConfirmationDialog.jsx';
 import MarkdownRenderer from '../../components/markdown-editor/MarkdownRenderer.jsx';
@@ -27,6 +28,7 @@ function Detail() {
   const navigate = useNavigate();
   const location = useLocation();
   const { user, isAuthenticated } = useAuth();
+  const handleInvalidSessionRedirect = useInvalidSessionRedirect();
   const [article, setArticle] = useState(null);
   const [relatedArticles, setRelatedArticles] = useState([]);
   const [comments, setComments] = useState([]);
@@ -177,6 +179,10 @@ function Detail() {
       await articleService.remove(articleId, user.accessToken);
       navigate('/articles', { replace: true, state: { message: 'Article deleted.' } });
     } catch (err) {
+      if (handleInvalidSessionRedirect(err)) {
+        return;
+      }
+
       setArticleActionError(err.message);
     } finally {
       articleDeleteRef.current = false;
@@ -220,6 +226,10 @@ function Detail() {
       setCommentText('');
       setStatus('Comment posted.');
     } catch (err) {
+      if (handleInvalidSessionRedirect(err)) {
+        return;
+      }
+
       setCommentServerError(err.message);
     } finally {
       commentSaveRef.current = false;
@@ -242,6 +252,10 @@ function Detail() {
       setCommentDeleteConfirmId('');
       setStatus('Comment deleted.');
     } catch (err) {
+      if (handleInvalidSessionRedirect(err)) {
+        return;
+      }
+
       setCommentDeleteError(err.message);
     } finally {
       commentDeleteRef.current = '';

@@ -48,6 +48,22 @@ describe('MyArticles page', () => {
     await waitFor(() => expect(screen.queryByText('Owner Article')).not.toBeInTheDocument());
     expect(articleService.remove).toHaveBeenCalledWith('owner-article', 'token');
   });
+
+  it('keeps a non-owner 403 as an action error without clearing the session', async () => {
+    const articleService = await import('../../api/articleService');
+    articleService.remove.mockRejectedValue(new RequestError('Only the owner can delete this article.', {
+      status: 403,
+    }));
+
+    renderMyArticles();
+
+    await screen.findByText('Owner Article');
+    await userEvent.click(screen.getByRole('button', { name: /^delete$/i }));
+    await userEvent.click(screen.getByRole('button', { name: /delete article/i }));
+
+    expect(await screen.findByRole('alert')).toHaveTextContent('Only the owner can delete this article.');
+    expect(localStorage.getItem('hristian-blog-session')).toContain('token');
+  });
 });
 
 function renderMyArticles() {
@@ -56,10 +72,18 @@ function renderMyArticles() {
       <AuthProvider>
         <Routes>
           <Route path="/my-articles" element={<MyArticles />} />
+          <Route path="/login" element={<div>Login page</div>} />
         </Routes>
       </AuthProvider>
     </MemoryRouter>,
   );
+}
+
+class RequestError extends Error {
+  constructor(message, { status }) {
+    super(message);
+    this.status = status;
+  }
 }
 
 function setStoredSession(id) {

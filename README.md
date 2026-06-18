@@ -41,6 +41,7 @@ Hristian Blog is a complete local React portfolio demo for writing, browsing, ma
 - Markdown article writing workspace with live preview, image preview, and publishing settings.
 - Safe Markdown rendering for headings, lists, links, quotes, bold, italic, inline code, and code blocks.
 - Registration, login, logout, guest-only auth routes, and persisted local sessions.
+- Expired local sessions are cleared and redirected back to login when the practice server rejects a stale token.
 - Protected create/edit article routes.
 - Authenticated comment creation and owner-only comment deletion.
 - Lightweight success feedback for article and comment CRUD actions.
@@ -83,8 +84,8 @@ Hristian Blog is a complete local React portfolio demo for writing, browsing, ma
 
 Current local coverage:
 
-- Unit/component tests: 14 files, 48 tests.
-- Playwright browser workflows: 10 tests.
+- Unit/component tests: 16 files, 57 tests.
+- Playwright browser workflows: 11 tests.
 - CI jobs: `Client quality` and `Browser smoke`.
 
 Useful commands:
@@ -183,7 +184,7 @@ This repository is not production-deployed. A frontend-only deploy would render 
 - No image upload or media storage.
 - No likes, bookmarks, profile editing, password recovery, or admin dashboard.
 - Local practice server data is in-memory for each server process and is not a production persistence layer.
-- Authentication is educational and stores the local demo session in `localStorage`.
+- Authentication is educational and stores the local demo session in `localStorage`; restarting the practice server can invalidate stored access tokens, and the app now sends the user back to login when that happens.
 
 ## Project Status
 

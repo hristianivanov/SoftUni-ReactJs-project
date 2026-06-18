@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import * as articleService from '../../api/articleService';
 import useAuth from '../../auth/useAuth';
+import useInvalidSessionRedirect from '../../auth/useInvalidSessionRedirect';
 import { EmptyState, ErrorState, LoadingState } from '../../components/app-state/AppState.jsx';
 import ConfirmationDialog from '../../components/confirmation-dialog/ConfirmationDialog.jsx';
 import StatusMessage from '../../components/status-message/StatusMessage.jsx';
@@ -20,6 +21,7 @@ import styles from './myArticles.module.css';
 export default function MyArticles() {
   usePageTitle('My Articles');
   const { user } = useAuth();
+  const handleInvalidSessionRedirect = useInvalidSessionRedirect();
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState('');
@@ -77,6 +79,10 @@ export default function MyArticles() {
       setDeleteTarget(null);
       setStatus('Article deleted.');
     } catch (error) {
+      if (handleInvalidSessionRedirect(error)) {
+        return;
+      }
+
       setDeleteError(error.message);
     } finally {
       deletingRef.current = '';

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import * as articleService from '../../api/articleService';
 import useAuth from '../../auth/useAuth';
+import useInvalidSessionRedirect from '../../auth/useInvalidSessionRedirect';
 import { ErrorState, LoadingState } from '../../components/app-state/AppState.jsx';
 import ArticleForm from '../../components/article-form/ArticleForm.jsx';
 import usePageTitle from '../../hooks/usePageTitle';
@@ -12,6 +13,7 @@ export default function EditArticle() {
   const { articleId } = useParams();
   const { user } = useAuth();
   const navigate = useNavigate();
+  const handleInvalidSessionRedirect = useInvalidSessionRedirect();
   const [article, setArticle] = useState(null);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState('');
@@ -92,6 +94,10 @@ export default function EditArticle() {
         state: { message: 'Article updated.' },
       });
     } catch (error) {
+      if (handleInvalidSessionRedirect(error)) {
+        return;
+      }
+
       setServerError(error.message);
     } finally {
       setIsSaving(false);

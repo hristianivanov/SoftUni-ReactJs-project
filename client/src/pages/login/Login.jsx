@@ -8,7 +8,14 @@ const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default function Login() {
   usePageTitle('Login');
-  const { login, authError, clearAuthError, isSubmitting } = useAuth();
+  const {
+    login,
+    authError,
+    clearAuthError,
+    sessionMessage,
+    clearSessionMessage,
+    isSubmitting,
+  } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const emailRef = useRef(null);
@@ -43,6 +50,7 @@ export default function Login() {
       const session = await login(values.email.trim(), values.password);
 
       if (session) {
+        clearSessionMessage();
         setValues((current) => ({ ...current, password: '' }));
         navigate(from, { replace: true });
       }
@@ -56,6 +64,7 @@ export default function Login() {
     const { name, value } = event.target;
     setValues((current) => ({ ...current, [name]: value }));
     setErrors((current) => ({ ...current, [name]: '' }));
+    clearSessionMessage();
   }
 
   function focusFirstError(nextErrors) {
@@ -76,6 +85,11 @@ export default function Login() {
         {authError && (
           <div ref={errorRef} tabIndex={-1} className={styles.errorSummary} role="alert">
             {authError}
+          </div>
+        )}
+        {!authError && sessionMessage && (
+          <div className={styles.errorSummary} role="status">
+            {sessionMessage}
           </div>
         )}
 

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as articleService from '../../api/articleService';
 import useAuth from '../../auth/useAuth';
+import useInvalidSessionRedirect from '../../auth/useInvalidSessionRedirect';
 import ArticleForm from '../../components/article-form/ArticleForm.jsx';
 import { createAuthorFromUser } from '../../utils/authors';
 import usePageTitle from '../../hooks/usePageTitle';
@@ -11,6 +12,7 @@ export default function CreateArticle() {
   usePageTitle('Create article');
   const { user } = useAuth();
   const navigate = useNavigate();
+  const handleInvalidSessionRedirect = useInvalidSessionRedirect();
   const [serverError, setServerError] = useState('');
   const [isSaving, setIsSaving] = useState(false);
 
@@ -29,6 +31,10 @@ export default function CreateArticle() {
         state: { message: 'Article created.' },
       });
     } catch (error) {
+      if (handleInvalidSessionRedirect(error)) {
+        return;
+      }
+
       setServerError(error.message);
     } finally {
       setIsSaving(false);

@@ -61,6 +61,42 @@ test('authentication flow persists session and logs out', async ({ page }) => {
   await expect(page.getByText(demoUser.email)).toHaveCount(0);
 });
 
+test('expired session redirects to login and recovers after re-authentication', async ({ page }) => {
+  const title = `Recovered Session Article ${Date.now()}`;
+
+  await login(page, demoUser.email, demoUser.password);
+  await page.evaluate(() => {
+    const key = 'hristian-blog-session';
+    const session = JSON.parse(window.localStorage.getItem(key));
+    window.localStorage.setItem(key, JSON.stringify({
+      ...session,
+      accessToken: 'stale-invalid-token',
+    }));
+  });
+
+  await page.goto('/articles/create');
+  await fillArticleForm(page, title, 'Expired session recovery verification.');
+  await page.getByRole('button', { name: /create article/i }).click();
+
+  await expect(page).toHaveURL(/\/login$/);
+  await expect(page.getByRole('status')).toHaveText(/your session expired/i);
+  await expect.poll(() => page.evaluate(() => window.localStorage.getItem('hristian-blog-session'))).toBeNull();
+  await expect(page.getByRole('banner').getByRole('link', { name: /login/i })).toBeVisible();
+
+  await page.getByLabel(/email/i).fill(demoUser.email);
+  await page.getByLabel(/^password$/i).fill(demoUser.password);
+  await page.getByRole('button', { name: /sign in/i }).click();
+  await expect(page).toHaveURL(/\/articles\/create$/);
+
+  await fillArticleForm(page, title, 'Fresh login creates successfully after an expired session.');
+  await page.getByRole('button', { name: /create article/i }).click();
+  await expect(page.getByRole('heading', { name: title })).toBeVisible();
+
+  await page.getByRole('button', { name: /^delete$/i }).click();
+  await page.getByRole('button', { name: /delete article/i }).click();
+  await expect(page).toHaveURL(/\/articles$/);
+});
+
 test('article and comment owner flow works', async ({ page }) => {
   const title = `Playwright Article ${Date.now()}`;
 
