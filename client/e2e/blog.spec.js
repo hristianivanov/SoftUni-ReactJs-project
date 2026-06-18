@@ -96,6 +96,88 @@ test('article and comment owner flow works', async ({ page }) => {
   await expect(page.getByRole('status')).toHaveText(/article deleted/i);
 });
 
+test('API rejects non-owner article update and delete requests', async () => {
+  const api = await request.newContext({ baseURL: apiBaseUrl });
+  const stamp = `${Date.now()}-${Math.round(Math.random() * 100000)}`;
+  const userA = { email: `owner-a-${stamp}@local.test`, password: 'demo123' };
+  const userB = { email: `owner-b-${stamp}@local.test`, password: 'demo123' };
+  let userASession;
+  let article;
+
+  try {
+    userASession = await registerApiUser(api, userA);
+    const userBSession = await registerApiUser(api, userB);
+    article = await createApiArticle(api, userASession.accessToken, `API Ownership ${stamp}`);
+
+    const updateResponse = await api.put(`/data/articles/${article._id}`, {
+      headers: { 'X-Authorization': userBSession.accessToken },
+      data: {
+        ...article,
+        title: `Hijacked ${stamp}`,
+      },
+    });
+    expect(updateResponse.status()).toBe(403);
+
+    const deleteResponse = await api.delete(`/data/articles/${article._id}`, {
+      headers: { 'X-Authorization': userBSession.accessToken },
+    });
+    expect(deleteResponse.status()).toBe(403);
+
+    const ownerDeleteResponse = await api.delete(`/data/articles/${article._id}`, {
+      headers: { 'X-Authorization': userASession.accessToken },
+    });
+    expect(ownerDeleteResponse.ok()).toBe(true);
+
+    const missingResponse = await api.get(`/data/articles/${article._id}`);
+    expect(missingResponse.status()).toBe(404);
+    article = null;
+  } finally {
+    if (article?._id && userASession?.accessToken) {
+      await api.delete(`/data/articles/${article._id}`, {
+        headers: { 'X-Authorization': userASession.accessToken },
+      });
+    }
+
+    await api.dispose();
+  }
+});
+
+test('non-owner cannot see article owner controls or open the edit form', async ({ page }) => {
+  const api = await request.newContext({ baseURL: apiBaseUrl });
+  const stamp = `${Date.now()}-${Math.round(Math.random() * 100000)}`;
+  const userA = { email: `ui-owner-a-${stamp}@local.test`, password: 'demo123' };
+  const userB = { email: `ui-owner-b-${stamp}@local.test`, password: 'demo123' };
+  let userASession;
+  let article;
+
+  try {
+    userASession = await registerApiUser(api, userA);
+    await registerApiUser(api, userB);
+    article = await createApiArticle(api, userASession.accessToken, `UI Ownership ${stamp}`);
+
+    await login(page, userB.email, userB.password);
+    await page.goto(`/articles/${article._id}`);
+
+    await expect(page.getByRole('heading', { name: article.title })).toBeVisible();
+    await expect(page.getByRole('link', { name: /^edit$/i })).toHaveCount(0);
+    await expect(page.getByRole('button', { name: /^delete$/i })).toHaveCount(0);
+
+    await page.goto(`/articles/${article._id}/edit`);
+    await expect(page.getByRole('heading', { name: /you cannot edit this article/i })).toBeVisible();
+    await expect(page.getByText(/only the author who created this article can edit it/i)).toBeVisible();
+    await expect(page.getByRole('button', { name: /save changes/i })).toHaveCount(0);
+    await expect(page.getByLabel(/summary/i)).toHaveCount(0);
+  } finally {
+    if (article?._id && userASession?.accessToken) {
+      await api.delete(`/data/articles/${article._id}`, {
+        headers: { 'X-Authorization': userASession.accessToken },
+      });
+    }
+
+    await api.dispose();
+  }
+});
+
 test('my articles dashboard manages owned articles', async ({ page }) => {
   const title = `My Articles E2E ${Date.now()}`;
 
@@ -241,6 +323,40 @@ async function fillArticleForm(page, title, extraContent) {
   await page.getByLabel(/image url/i).fill('https://images.unsplash.com/photo-1498050108023-c5249f4df085');
   await page.getByLabel(/category/i).fill('React');
   await page.getByLabel(/reading time/i).fill('5');
+}
+
+async function registerApiUser(api, user) {
+  const response = await api.post('/users/register', { data: user });
+
+  if (response.ok()) {
+    return response.json();
+  }
+
+  const loginResponse = await api.post('/users/login', { data: user });
+  expect(loginResponse.ok()).toBe(true);
+
+  return loginResponse.json();
+}
+
+async function createApiArticle(api, accessToken, title) {
+  const response = await api.post('/data/articles', {
+    headers: { 'X-Authorization': accessToken },
+    data: {
+      title,
+      summary: 'A summary long enough for ownership verification.',
+      content: 'This article content is long enough for deterministic ownership verification.',
+      imageUrl: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085',
+      category: 'React',
+      readingTime: 5,
+      featured: false,
+      authorName: 'ownership-test',
+      authorAvatar: '/img/author.jpg',
+    },
+  });
+
+  expect(response.ok()).toBe(true);
+
+  return response.json();
 }
 
 async function ensureSeedData(api) {

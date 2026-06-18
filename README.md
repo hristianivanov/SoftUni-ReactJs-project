@@ -15,6 +15,20 @@ Hristian Blog is a complete local React portfolio demo for writing, browsing, ma
 - Defensive loading, error, empty, not-found, and success states.
 - CI-backed lint, unit/component tests, production build, and Playwright browser smoke tests.
 
+## SoftUni Assignment Coverage
+
+- Public pages are available to guests; private article management pages require login.
+- 6 dynamic pages cover Home, Article Catalog, Article Details, My Articles, Create Article, and Edit Article.
+- Catalog and parameterized details views read articles from the REST API.
+- Articles support full CRUD through authenticated create, edit, and delete flows.
+- Comments provide the required logged-in user interaction with records.
+- Author-only edit/delete controls are enforced in the UI and by the SoftUni practice server.
+- Guests can browse basic information but cannot create articles, edit articles, or post comments.
+- Private and guest-only route guards cover assignment access rules.
+- API communication uses native `fetch` through service modules in `client/src/api`.
+- Lint, unit/component tests, Playwright E2E tests, and GitHub Actions verify the main flows.
+- Full mapping: [Assignment Compliance](docs/ASSIGNMENT_COMPLIANCE.md).
+
 ## Features
 
 - Public home page with featured and recent articles.
