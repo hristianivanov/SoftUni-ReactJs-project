@@ -107,12 +107,14 @@ export default function MyArticles() {
         {loading && <LoadingState message="Loading your articles..." />}
         {!loading && loadError && <ErrorState title="Could not load your articles" message={loadError} />}
         {!loading && !loadError && articles.length === 0 && (
-          <div className={styles.empty}>
-            <EmptyState
-              title="No articles yet"
-              message="Create your first article and it will appear in this dashboard."
-            />
-            <Link className={styles.createLink} to="/articles/create">Write Article</Link>
+          <div className={styles.emptyPanel}>
+            <div className={styles.emptyInner}>
+              <EmptyState
+                title="No articles yet"
+                message="Create your first article and it will appear in this dashboard."
+              />
+              <Link className={styles.createLink} to="/articles/create">Write Article</Link>
+            </div>
           </div>
         )}
         {!loading && !loadError && articles.length > 0 && (
