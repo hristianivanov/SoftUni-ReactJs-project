@@ -56,6 +56,28 @@ describe('article and comment owner visibility', () => {
     expect(screen.getByRole('heading', { name: 'Related Article' })).toBeInTheDocument();
     expect(screen.getAllByRole('heading', { name: 'Owner Article' })).toHaveLength(1);
   });
+
+  it('renders old plain text content as readable paragraphs', async () => {
+    renderDetail();
+
+    expect(await screen.findByText(/Readable article content/)).toBeInTheDocument();
+  });
+
+  it('renders Markdown content safely', async () => {
+    const articleService = await import('../../api/articleService');
+    articleService.getById.mockResolvedValue({
+      ...article,
+      content: '## Markdown Heading\n\n- First item\n\n> Safe quote\n\n[Safe](https://example.com) [Bad](javascript:alert(1))',
+    });
+
+    renderDetail();
+
+    expect(await screen.findByRole('heading', { name: 'Markdown Heading' })).toBeInTheDocument();
+    expect(screen.getByText('First item')).toBeInTheDocument();
+    expect(screen.getByText('Safe quote')).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Safe' })).toHaveAttribute('href', 'https://example.com');
+    expect(screen.queryByRole('link', { name: 'Bad' })).not.toBeInTheDocument();
+  });
 });
 
 const article = {

@@ -11,7 +11,10 @@ Hristian Blog is a complete local React portfolio demo for writing, browsing, ma
 - Full local CRUD workflow for articles and comments using the SoftUni practice API.
 - Protected author workspace with owner-only article and comment controls.
 - URL-backed catalog search, category filtering, sorting, and pagination.
+- Compact catalog filter chips with stable article-card sizing across pages.
+- Lightweight Markdown editor with toolbar, safe live preview, and safe detail rendering.
 - Accessible responsive navigation with a focus-managed hamburger drawer.
+- Readable authenticated display names while preserving full emails in title attributes.
 - Defensive loading, error, empty, not-found, and success states.
 - CI-backed lint, unit/component tests, production build, and Playwright browser smoke tests.
 
@@ -35,6 +38,8 @@ Hristian Blog is a complete local React portfolio demo for writing, browsing, ma
 - Article catalog with URL-persisted search, category filters, sorting, and 6-item pagination.
 - Article detail pages with related articles, comments, and owner-only article actions.
 - My Articles dashboard for viewing, editing, and deleting owned articles.
+- Markdown article writing workspace with live preview, image preview, and publishing settings.
+- Safe Markdown rendering for headings, lists, links, quotes, bold, italic, inline code, and code blocks.
 - Registration, login, logout, guest-only auth routes, and persisted local sessions.
 - Protected create/edit article routes.
 - Authenticated comment creation and owner-only comment deletion.
@@ -78,8 +83,8 @@ Hristian Blog is a complete local React portfolio demo for writing, browsing, ma
 
 Current local coverage:
 
-- Unit/component tests: 11 files, 34 tests.
-- Playwright browser workflows: 8 tests.
+- Unit/component tests: 14 files, 48 tests.
+- Playwright browser workflows: 10 tests.
 - CI jobs: `Client quality` and `Browser smoke`.
 
 Useful commands:

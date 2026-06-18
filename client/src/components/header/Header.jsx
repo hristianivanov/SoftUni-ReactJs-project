@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import useAuth from '../../auth/useAuth';
+import { getUserDisplayName } from '../../utils/users';
 import Logo from '../logo/Logo.jsx';
 import styles from './header.module.css';
 
@@ -26,6 +27,7 @@ export default function Header() {
   const menuButtonRef = useRef(null);
   const drawerRef = useRef(null);
   const links = isAuthenticated ? authLinks : guestLinks;
+  const userDisplayName = getUserDisplayName(user);
 
   useEffect(() => {
     setOpen(false);
@@ -119,7 +121,7 @@ export default function Header() {
         <div className={styles.authActions}>
           {isAuthenticated ? (
             <>
-              <span className={styles.userEmail} title={user.email}>{user.email}</span>
+              <span className={styles.userEmail} title={user.email}>{userDisplayName}</span>
               <button className={styles.authButton} type="button" onClick={handleLogout} disabled={isSubmitting}>
                 Logout
               </button>
@@ -165,7 +167,7 @@ export default function Header() {
         ))}
         {isAuthenticated ? (
           <>
-            <span className={styles.mobileUser} title={user.email}>{user.email}</span>
+            <span className={styles.mobileUser} title={user.email}>{userDisplayName}</span>
             <button className={styles.drawerButton} type="button" onClick={handleLogout} disabled={isSubmitting}>
               Logout
             </button>

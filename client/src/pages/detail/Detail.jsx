@@ -5,6 +5,7 @@ import * as commentService from '../../api/commentService';
 import useAuth from '../../auth/useAuth';
 import { EmptyState, ErrorState, LoadingState } from '../../components/app-state/AppState.jsx';
 import ConfirmationDialog from '../../components/confirmation-dialog/ConfirmationDialog.jsx';
+import MarkdownRenderer from '../../components/markdown-editor/MarkdownRenderer.jsx';
 import PostCard from '../../components/post-card/PostCard.jsx';
 import StatusMessage from '../../components/status-message/StatusMessage.jsx';
 import usePageTitle from '../../hooks/usePageTitle';
@@ -12,7 +13,6 @@ import {
   fallbackAvatar,
   fallbackImage,
   formatArticleDate,
-  getParagraphs,
   handleImageFallback,
   normalizeArticleId,
   resolveImageUrl,
@@ -284,8 +284,6 @@ function Detail() {
   const authorName = safeText(article.authorName, 'Hristian Ivanov');
   const category = safeText(article.category, 'General');
   const readingTime = Number.isFinite(Number(article.readingTime)) ? Number(article.readingTime) : 3;
-  const articleKey = normalizeArticleId(article) || articleId;
-  const paragraphs = getParagraphs(article.content);
   const isOwner = Boolean(user && article._ownerId === user._id);
 
   return (
@@ -351,9 +349,10 @@ function Detail() {
           />
         </div>
         <div className={styles.content}>
-          {paragraphs.map((paragraph, index) => (
-            <p key={`${articleKey}-paragraph-${index}`}>{paragraph}</p>
-          ))}
+          <MarkdownRenderer
+            value={article.content}
+            placeholder="This article does not have readable content yet."
+          />
         </div>
       </article>
 

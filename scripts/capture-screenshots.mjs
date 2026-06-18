@@ -36,7 +36,7 @@ try {
 
   await login(page);
   await capture(page, '/my-articles', 'my-articles-desktop.jpg');
-  await capture(page, '/articles/create', 'article-editor-desktop.jpg');
+  await captureEditor(page);
 
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('http://localhost:5173/', { waitUntil: 'networkidle' });
@@ -80,6 +80,22 @@ async function screenshot(page, fileName) {
     quality: 84,
     fullPage: false,
   });
+}
+
+async function captureEditor(page) {
+  await page.goto('http://localhost:5173/articles/create', { waitUntil: 'networkidle' });
+  await waitForReadyPage(page);
+  await page.getByLabel(/^content$/i).fill([
+    '## Drafting with Markdown',
+    '',
+    '- Use the toolbar for structure.',
+    '- Preview the result before publishing.',
+    '',
+    '> Keep the article focused and practical.',
+  ].join('\n'));
+  await page.getByLabel(/image url/i).fill('https://images.unsplash.com/photo-1498050108023-c5249f4df085');
+  await page.getByAltText(/article preview/i).waitFor();
+  await screenshot(page, 'article-editor-desktop.jpg');
 }
 
 async function login(page) {

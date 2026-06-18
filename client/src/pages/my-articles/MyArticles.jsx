@@ -89,19 +89,21 @@ export default function MyArticles() {
   return (
     <main id="main-content" className={styles.container}>
       <section className={`${styles.hero} wrapper`}>
-        <p className={styles.eyebrow}>Author dashboard</p>
-        <h1 className="heading-1">My Articles</h1>
-        <p className={`${styles.intro} paragraph-1`}>
-          Review, open, edit, and remove the articles you created with the demo account.
-        </p>
+        <div className={styles.heroText}>
+          <p className={styles.eyebrow}>Author dashboard</p>
+          <h1>My Articles</h1>
+          <p className={styles.intro}>
+            Review, open, edit, and remove the articles you created with this account.
+          </p>
+        </div>
         <div className={styles.summary}>
           <strong>{articles.length}</strong>
           <span>{articles.length === 1 ? 'owned article' : 'owned articles'}</span>
         </div>
-        <StatusMessage message={status} onClear={() => setStatus('')} />
       </section>
 
       <section className={`${styles.content} wrapper`}>
+        <StatusMessage message={status} onClear={() => setStatus('')} />
         {loading && <LoadingState message="Loading your articles..." />}
         {!loading && loadError && <ErrorState title="Could not load your articles" message={loadError} />}
         {!loading && !loadError && articles.length === 0 && (

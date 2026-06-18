@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import MarkdownEditor from '../markdown-editor/MarkdownEditor.jsx';
 import { createArticlePayload, validateArticle } from './articleFormValidation';
 import styles from './articleForm.module.css';
 
@@ -71,6 +72,11 @@ export default function ArticleForm({
     setErrors((current) => ({ ...current, [name]: '' }));
   }
 
+  function handleContentChange(nextValue) {
+    setValues((current) => ({ ...current, content: nextValue }));
+    setErrors((current) => ({ ...current, content: '' }));
+  }
+
   const submitLabel = mode === 'edit' ? 'Save changes' : 'Create article';
   const loadingLabel = mode === 'edit' ? 'Saving changes...' : 'Creating article...';
 
@@ -78,58 +84,71 @@ export default function ArticleForm({
     <form className={styles.form} onSubmit={handleSubmit} noValidate>
       {serverError && <div className={styles.errorSummary} role="alert">{serverError}</div>}
 
-      <FormField id="title" label="Title" error={errors.title}>
-        <input
-          ref={fieldRefs.title}
-          id="title"
-          name="title"
-          type="text"
-          value={values.title}
-          onChange={handleChange}
-          aria-invalid={Boolean(errors.title)}
-          aria-describedby={errors.title ? 'title-error' : undefined}
-          required
-          aria-required="true"
-          placeholder="A clear developer-focused title"
-        />
-      </FormField>
+      <div className={styles.layout}>
+        <div className={styles.mainColumn}>
+          <FormField id="title" label="Title" error={errors.title}>
+            <input
+              ref={fieldRefs.title}
+              className={styles.titleInput}
+              id="title"
+              name="title"
+              type="text"
+              value={values.title}
+              onChange={handleChange}
+              aria-invalid={Boolean(errors.title)}
+              aria-describedby={errors.title ? 'title-error' : undefined}
+              required
+              aria-required="true"
+              placeholder="A clear developer-focused title"
+            />
+          </FormField>
 
-      <FormField id="summary" label="Summary" error={errors.summary}>
-        <textarea
-          ref={fieldRefs.summary}
-          id="summary"
-          name="summary"
-          rows={4}
-          value={values.summary}
-          onChange={handleChange}
-          aria-invalid={Boolean(errors.summary)}
-          aria-describedby={errors.summary ? 'summary-error summary-counter' : 'summary-counter'}
-          required
-          aria-required="true"
-          placeholder="Briefly explain what readers will learn"
-        />
-        <span id="summary-counter" className={styles.counter}>{values.summary.length} characters</span>
-      </FormField>
+          <FormField
+            id="summary"
+            label="Summary"
+            error={errors.summary}
+            helper="Used as the article intro and card description."
+          >
+            <textarea
+              ref={fieldRefs.summary}
+              id="summary"
+              name="summary"
+              rows={4}
+              value={values.summary}
+              onChange={handleChange}
+              aria-invalid={Boolean(errors.summary)}
+              aria-describedby={errors.summary ? 'summary-error summary-counter' : 'summary-counter'}
+              required
+              aria-required="true"
+              placeholder="Briefly explain what readers will learn"
+            />
+            <span id="summary-counter" className={styles.counter}>{values.summary.length} characters</span>
+          </FormField>
 
-      <FormField id="content" label="Content" error={errors.content}>
-        <textarea
-          ref={fieldRefs.content}
-          id="content"
-          name="content"
-          rows={10}
-          value={values.content}
-          onChange={handleChange}
-          aria-invalid={Boolean(errors.content)}
-          aria-describedby={errors.content ? 'content-error content-counter' : 'content-counter'}
-          required
-          aria-required="true"
-          placeholder="Write the article content"
-        />
-        <span id="content-counter" className={styles.counter}>{values.content.length} characters</span>
-      </FormField>
+          <FormField
+            id="content"
+            label="Content"
+            error={errors.content}
+            helper="Use Markdown shortcuts or the toolbar to format the article."
+          >
+            <MarkdownEditor
+              value={values.content}
+              onChange={handleContentChange}
+              error={errors.content}
+              required
+              describedBy={errors.content ? 'content-error content-counter' : 'content-counter'}
+              textareaRef={fieldRefs.content}
+            />
+          </FormField>
+        </div>
 
-      <div className={styles.grid}>
-        <FormField id="imageUrl" label="Image URL" error={errors.imageUrl}>
+        <aside className={styles.sideColumn} aria-label="Publishing settings">
+          <div className={styles.sideHeader}>
+            <p>Publishing settings</p>
+            <span>Preview and organize the article before saving.</span>
+          </div>
+
+          <FormField id="imageUrl" label="Image URL" error={errors.imageUrl}>
           <input
             ref={fieldRefs.imageUrl}
             id="imageUrl"
@@ -143,6 +162,22 @@ export default function ArticleForm({
           aria-required="true"
           placeholder="https://example.com/article-image.jpg"
         />
+          <div className={styles.imagePreview}>
+            {values.imageUrl ? (
+              <img
+                src={values.imageUrl}
+                alt="Article preview"
+                onError={(event) => {
+                  event.currentTarget.style.display = 'none';
+                }}
+                onLoad={(event) => {
+                  event.currentTarget.style.display = 'block';
+                }}
+              />
+            ) : (
+              <span>Image preview</span>
+            )}
+          </div>
         </FormField>
 
         <FormField id="category" label="Category" error={errors.category}>
@@ -188,6 +223,15 @@ export default function ArticleForm({
           />
           Featured article
         </label>
+          <div className={styles.tips}>
+            <strong>Writing tips</strong>
+            <ul>
+              <li>Start with the outcome readers get.</li>
+              <li>Use headings to break long sections.</li>
+              <li>Keep code examples short and readable.</li>
+            </ul>
+          </div>
+        </aside>
       </div>
 
       <div className={styles.actions}>
@@ -200,10 +244,11 @@ export default function ArticleForm({
   );
 }
 
-function FormField({ id, label, error, children }) {
+function FormField({ id, label, error, helper, children }) {
   return (
     <div className={styles.field}>
       <label htmlFor={id}>{label}</label>
+      {helper && <p className={styles.helper}>{helper}</p>}
       {children}
       {error && <span id={`${id}-error`} className={styles.fieldError}>{error}</span>}
     </div>

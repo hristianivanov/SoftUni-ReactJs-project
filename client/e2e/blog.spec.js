@@ -20,6 +20,7 @@ test('guest public flow renders and filters content', async ({ page }) => {
 
   await page.goto('/articles?category=React');
   await expect(page.getByText(/matching articles/i)).toBeVisible();
+  await expect(page.locator('button[aria-pressed="true"]', { hasText: 'React' })).toBeVisible();
 
   const articleLink = page.locator('article a').first();
   await articleLink.click();
@@ -56,7 +57,8 @@ test('authentication flow persists session and logs out', async ({ page }) => {
   await page.getByLabel(/email/i).fill(demoUser.email);
   await page.getByLabel(/password/i).fill(demoUser.password);
   await page.getByRole('button', { name: /sign in/i }).click();
-  await expect(page.locator(`span[title="${demoUser.email}"]`).first()).toBeVisible();
+  await expect(page.locator(`span[title="${demoUser.email}"]`).first()).toHaveText('Demo Author');
+  await expect(page.getByText(demoUser.email)).toHaveCount(0);
 });
 
 test('article and comment owner flow works', async ({ page }) => {
@@ -70,6 +72,8 @@ test('article and comment owner flow works', async ({ page }) => {
   await fillArticleForm(page, title, 'Original content for Playwright verification.');
   await page.getByRole('button', { name: /create article/i }).click();
   await expect(page.getByRole('heading', { name: title })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /verification heading/i })).toBeVisible();
+  await expect(page.getByText('Toolbar')).toBeVisible();
   await expect(page.getByRole('link', { name: /edit/i })).toBeVisible();
 
   await page.getByRole('link', { name: /edit/i }).click();
@@ -218,6 +222,7 @@ test('catalog URL state survives refresh', async ({ page }) => {
   await page.goto('/articles?sort=oldest');
   await page.getByRole('button', { name: /next/i }).click();
   await expect(page).toHaveURL(/page=2/);
+  await assertNoHorizontalOverflow(page);
 
   const url = page.url();
   await page.reload();
@@ -240,6 +245,8 @@ test('mobile drawer navigation is accessible for authenticated users', async ({ 
   await expect(drawer).toBeVisible();
   await expect(drawer.getByRole('link', { name: /my articles/i })).toBeVisible();
   await expect(drawer.getByRole('link', { name: /write article/i })).toBeVisible();
+  await expect(drawer.getByTitle(demoUser.email)).toHaveText('Demo Author');
+  await expect(drawer).not.toHaveText(demoUser.email);
   await expect(drawer.locator('a').first()).toBeFocused();
 
   await page.keyboard.press('Escape');
@@ -302,6 +309,8 @@ test('responsive and accessibility smoke checks', async ({ page }) => {
   await login(page, demoUser.email, demoUser.password);
   await page.goto('/articles/create');
   await expect(page.getByLabel(/title/i)).toBeVisible();
+  await page.getByLabel(/image url/i).fill('https://images.unsplash.com/photo-1498050108023-c5249f4df085');
+  await expect(page.getByAltText(/article preview/i)).toBeVisible();
 });
 
 async function login(page, email, password) {
@@ -319,8 +328,13 @@ async function login(page, email, password) {
 async function fillArticleForm(page, title, extraContent) {
   await page.getByLabel(/title/i).fill(title);
   await page.getByLabel(/summary/i).fill('A summary long enough for the article form validation.');
-  await page.getByLabel(/content/i).fill(`This article content is long enough for validation. ${extraContent}`);
+  const content = page.getByLabel(/^content$/i);
+  await content.fill(`## Verification Heading\n\nToolbar text makes this article content long enough for validation. ${extraContent}`);
+  await content.evaluate((element) => element.setSelectionRange(25, 32));
+  await page.getByRole('button', { name: /bold/i }).click();
+  await expect(content).toHaveValue(/\*\*Toolbar\*\*/);
   await page.getByLabel(/image url/i).fill('https://images.unsplash.com/photo-1498050108023-c5249f4df085');
+  await expect(page.getByAltText(/article preview/i)).toBeVisible();
   await page.getByLabel(/category/i).fill('React');
   await page.getByLabel(/reading time/i).fill('5');
 }

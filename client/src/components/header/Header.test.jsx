@@ -47,6 +47,19 @@ describe('Header mobile navigation', () => {
     const guestNav = screen.getAllByRole('navigation', { name: /mobile navigation/i }).at(-1);
     expect(guestNav).not.toHaveTextContent('My Articles');
   });
+
+  it('shows display names instead of full emails in desktop and mobile auth UI', async () => {
+    setStoredSession('jane.writer@example.com');
+    renderHeader();
+
+    expect(screen.getAllByTitle('jane.writer@example.com')[0]).toHaveTextContent('Jane Writer');
+    expect(screen.queryByText('jane.writer@example.com')).not.toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole('button', { name: /toggle navigation menu/i }));
+    const drawer = screen.getByRole('navigation', { name: /mobile navigation/i });
+    expect(within(drawer).getByTitle('jane.writer@example.com')).toHaveTextContent('Jane Writer');
+    expect(drawer).not.toHaveTextContent('jane.writer@example.com');
+  });
 });
 
 function renderHeader() {
@@ -63,10 +76,10 @@ function renderHeader() {
   );
 }
 
-function setStoredSession() {
+function setStoredSession(email = 'demo@local.test') {
   localStorage.setItem('hristian-blog-session', JSON.stringify({
     _id: 'user-id',
-    email: 'demo@local.test',
+    email,
     accessToken: 'token',
   }));
 }

@@ -1,0 +1,102 @@
+.editor {
+    overflow: hidden;
+    border: 1px solid rgba(98, 70, 234, 0.16);
+    border-radius: var(--radius-md);
+    background: var(--white, #fffffe);
+    box-shadow: var(--shadow-soft);
+}
+
+.toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    border-bottom: 1px solid var(--light-grey-2, #e4e5e9);
+    padding: 10px;
+    background: #f7f7fb;
+}
+
+.toolbar button {
+    min-width: 38px;
+    min-height: 38px;
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    background: var(--white, #fffffe);
+    color: var(--black, #2b2c34);
+    font-weight: 900;
+    cursor: pointer;
+}
+
+.toolbar button:hover,
+.toolbar button:focus-visible {
+    border-color: var(--blue, #6246ea);
+    color: var(--blue, #6246ea);
+    outline: none;
+}
+
+.workspace {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 0.85fr);
+    min-height: 420px;
+}
+
+.inputPane,
+.previewPane {
+    min-width: 0;
+}
+
+.inputPane {
+    display: flex;
+    flex-direction: column;
+}
+
+.inputPane textarea {
+    flex: 1;
+    width: 100%;
+    min-height: 380px;
+    border: 0;
+    border-radius: 0;
+    background: var(--white, #fffffe);
+    padding: var(--space-4);
+    resize: vertical;
+    font: inherit;
+    line-height: 1.65;
+}
+
+.inputPane textarea:focus {
+    box-shadow: inset 0 0 0 3px rgba(98, 70, 234, 0.16);
+    outline: none;
+}
+
+.counter {
+    border-top: 1px solid var(--light-grey-2, #e4e5e9);
+    padding: 9px var(--space-4);
+    color: var(--text-muted, #76717d);
+    font-size: 0.875rem;
+    font-weight: 700;
+}
+
+.previewPane {
+    overflow: auto;
+    border-left: 1px solid var(--light-grey-2, #e4e5e9);
+    background: #fbfbfe;
+    padding: var(--space-4);
+}
+
+.previewHeader {
+    margin-bottom: var(--space-3);
+    color: var(--blue, #6246ea);
+    font-size: 0.8rem;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+@media screen and (max-width: 900px) {
+    .workspace {
+        grid-template-columns: 1fr;
+    }
+
+    .previewPane {
+        border-top: 1px solid var(--light-grey-2, #e4e5e9);
+        border-left: 0;
+    }
+}

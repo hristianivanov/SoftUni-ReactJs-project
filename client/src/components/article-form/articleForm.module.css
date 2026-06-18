@@ -1,14 +1,48 @@
 .form {
     display: flex;
     flex-direction: column;
+    gap: var(--space-5);
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 340px);
+    gap: var(--space-5);
+    align-items: start;
+}
+
+.mainColumn,
+.sideColumn {
+    min-width: 0;
+    display: grid;
     gap: var(--space-4);
 }
 
-.grid {
+.sideColumn {
+    position: sticky;
+    top: 104px;
+    border: 1px solid rgba(98, 70, 234, 0.12);
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 254, 0.82);
+    padding: var(--space-4);
+    box-shadow: var(--shadow-soft);
+}
+
+.sideHeader {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--space-4);
-    align-items: end;
+    gap: 4px;
+}
+
+.sideHeader p {
+    font-size: 1rem;
+    font-weight: 900;
+}
+
+.sideHeader span,
+.helper {
+    color: var(--text-muted, #76717d);
+    font-size: 0.875rem;
+    font-weight: 700;
 }
 
 .field {
@@ -33,12 +67,14 @@
     resize: vertical;
 }
 
-.field textarea {
-    min-height: 104px;
+.titleInput {
+    min-height: 58px;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-weight: 900;
 }
 
-.field textarea[name="content"] {
-    min-height: 220px;
+.field textarea {
+    min-height: 104px;
 }
 
 .field input:focus,
@@ -70,6 +106,44 @@
 .counter {
     color: var(--text-muted, #76717d);
     font-size: 14px;
+}
+
+.imagePreview {
+    display: grid;
+    min-height: 160px;
+    place-items: center;
+    overflow: hidden;
+    border-radius: var(--radius-sm);
+    background: var(--light-grey-1, #eff0f3);
+    color: var(--text-muted, #76717d);
+    font-weight: 800;
+}
+
+.imagePreview img {
+    width: 100%;
+    height: 100%;
+    min-height: 160px;
+    object-fit: cover;
+}
+
+.tips {
+    border-radius: var(--radius-sm);
+    background: var(--light-grey-1, #eff0f3);
+    padding: var(--space-4);
+}
+
+.tips strong {
+    display: block;
+    margin-bottom: var(--space-2);
+}
+
+.tips ul {
+    display: grid;
+    gap: var(--space-2);
+    padding-left: 1.1rem;
+    color: var(--text-secondary, #66636f);
+    font-size: 0.92rem;
+    font-weight: 700;
 }
 
 .errorSummary {
@@ -114,7 +188,11 @@
 }
 
 @media screen and (max-width:768px) {
-    .grid {
+    .layout {
         grid-template-columns: 1fr;
+    }
+
+    .sideColumn {
+        position: static;
     }
 }

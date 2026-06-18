@@ -197,7 +197,8 @@
 
 .relatedGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 360px));
+    justify-content: start;
     gap: var(--space-5);
 }
 

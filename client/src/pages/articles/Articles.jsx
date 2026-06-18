@@ -2,7 +2,6 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import * as articleService from '../../api/articleService';
 import { EmptyState, ErrorState, LoadingState } from '../../components/app-state/AppState.jsx';
-import CategoryCard from '../../components/category-card/CategoryCard.jsx';
 import PostCard from '../../components/post-card/PostCard.jsx';
 import StatusMessage from '../../components/status-message/StatusMessage.jsx';
 import {
@@ -15,6 +14,7 @@ import usePageTitle from '../../hooks/usePageTitle';
 import styles from './articles.module.css';
 
 const pageSize = 6;
+const categoryOrder = ['UX', 'Routing', 'React', 'Backend', 'API', 'JavaScript'];
 const sortOptions = [
   { value: 'newest', label: 'Newest' },
   { value: 'oldest', label: 'Oldest' },
@@ -77,6 +77,10 @@ export default function Articles() {
   }, []);
 
   const categoryCounts = useMemo(() => getCategoryCounts(articles), [articles]);
+  const categoryFilters = useMemo(() => categoryOrder.map((category) => ({
+    category,
+    count: categoryCounts[category] || 0,
+  })), [categoryCounts]);
   const matchingArticles = useMemo(() => filterArticles(articles, {
     searchTerm,
     category: selectedCategory,
@@ -145,19 +149,25 @@ export default function Articles() {
 
       <section className={`${styles.filters} wrapper`} aria-label="Article filters">
         <button
-          className={`${styles.filterButton} ${!selectedCategory ? styles.active : ''}`}
+          className={`${styles.filterChip} ${!selectedCategory ? styles.active : ''}`}
           type="button"
           onClick={() => handleCategory('')}
+          aria-pressed={!selectedCategory}
         >
-          All
+          <span>All</span>
+          <strong>{articles.length}</strong>
         </button>
-        {Object.entries(categoryCounts).map(([category, count]) => (
-          <CategoryCard
+        {categoryFilters.map(({ category, count }) => (
+          <button
             key={category}
-            name={category}
-            articleCount={count}
+            className={`${styles.filterChip} ${selectedCategory === category ? styles.active : ''}`}
+            type="button"
             onClick={() => handleCategory(category)}
-          />
+            aria-pressed={selectedCategory === category}
+          >
+            <span>{category}</span>
+            <strong>{count}</strong>
+          </button>
         ))}
       </section>
 
@@ -173,30 +183,30 @@ export default function Articles() {
         )}
         {!loading && !error && articles.length > 0 && (
           <>
-            <div className={styles.resultSummary}>
-              <div>
+            <div className={styles.catalogToolbar}>
+              <div className={styles.resultSummary}>
                 <h2>{pagination.visibleArticles.length} visible of {matchingArticles.length} matching articles</h2>
-                <p>
-                  Page {pagination.currentPage} of {pagination.totalPages}
-                </p>
+                <p>Page {pagination.currentPage} of {pagination.totalPages}</p>
               </div>
-              <label className={styles.sortControl} htmlFor="article-sort">
-                <span>Sort</span>
-                <select
-                  id="article-sort"
-                  value={sort}
-                  onChange={(event) => updateQuery({ sort: event.target.value }, { resetPage: true })}
-                >
-                  {sortOptions.map((option) => (
-                    <option key={option.value} value={option.value}>{option.label}</option>
-                  ))}
-                </select>
-              </label>
+              <div className={styles.toolbarActions}>
+                <label className={styles.sortControl} htmlFor="article-sort">
+                  <span>Sort</span>
+                  <select
+                    id="article-sort"
+                    value={sort}
+                    onChange={(event) => updateQuery({ sort: event.target.value }, { resetPage: true })}
+                  >
+                    {sortOptions.map((option) => (
+                      <option key={option.value} value={option.value}>{option.label}</option>
+                    ))}
+                  </select>
+                </label>
               {selectedCategory && (
                 <button type="button" onClick={() => handleCategory('')}>
                   Clear {selectedCategory}
                 </button>
               )}
+              </div>
             </div>
             {matchingArticles.length === 0 ? (
               <EmptyState

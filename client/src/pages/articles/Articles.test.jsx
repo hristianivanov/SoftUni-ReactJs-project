@@ -45,6 +45,19 @@ describe('Articles catalog', () => {
     await userEvent.selectOptions(screen.getByLabelText(/sort/i), 'title');
     expect(screen.getByTestId('location')).not.toHaveTextContent('page=');
   });
+
+  it('uses compact URL-backed category chips', async () => {
+    renderArticles('/articles');
+
+    const reactChip = await screen.findByRole('button', { name: /React/i });
+    expect(reactChip).toHaveAttribute('aria-pressed', 'false');
+
+    await userEvent.click(reactChip);
+
+    expect(screen.getByTestId('location')).toHaveTextContent('category=React');
+    expect(screen.getAllByRole('button', { name: /React/i })
+      .find((button) => button.getAttribute('aria-pressed') === 'true')).toBeTruthy();
+  });
 });
 
 function renderArticles(initialEntry) {
