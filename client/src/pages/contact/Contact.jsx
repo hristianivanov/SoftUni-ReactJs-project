@@ -4,8 +4,8 @@ import styles from './contact.module.css';
 const links = [
   {
     label: 'Email',
-    value: 'monstar.bog@gmail.com',
-    href: 'mailto:monstar.bog@gmail.com',
+    value: 'hristianivanoww.bog@gmail.com',
+    href: 'mailto:hristianivanoww.bog@gmail.com',
   },
   {
     label: 'GitHub',
