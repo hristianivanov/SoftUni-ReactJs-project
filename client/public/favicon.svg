@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Hristian Blog favicon">
+  <rect width="64" height="64" rx="14" fill="#6246ea"/>
+  <path d="M18 16h18c5.5 0 10 4.5 10 10v22H26c-4.4 0-8-3.6-8-8V16Z" fill="#fffffe"/>
+  <path d="M26 16h12c4.4 0 8 3.6 8 8v24H26V16Z" fill="#eff0f3"/>
+  <path d="M22 25 15 32l7 7" fill="none" stroke="#2b2c34" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="m42 25 7 7-7 7" fill="none" stroke="#2b2c34" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M29 42 35 22" fill="none" stroke="#6246ea" stroke-width="4" stroke-linecap="round"/>
+</svg>
