@@ -185,7 +185,3 @@ This repository is not production-deployed. A frontend-only deploy would render 
 - No likes, bookmarks, profile editing, password recovery, or admin dashboard.
 - Local practice server data is in-memory for each server process and is not a production persistence layer.
 - Authentication is educational and stores the local demo session in `localStorage`; restarting the practice server can invalidate stored access tokens, and the app now sends the user back to login when that happens.
-
-## Project Status
-
-Complete local portfolio demo.
